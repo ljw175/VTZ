@@ -47,6 +47,8 @@ public class ShipController : MonoBehaviour
     [Header("항해 경로(Planning) 설정")]
     [SerializeField] private int maxTracePoints = 200;
     [SerializeField] private float rewindSpeed = 100f;
+    [SerializeField] private float pathContinueDistance = 3f;
+    [SerializeField] private float pointMinDistance = 1f;
     private float rewindTimer = 0f;
 
     [Header("체력 및 피격 설정")]
@@ -56,6 +58,16 @@ public class ShipController : MonoBehaviour
     // [추가완료] 피격 파티클 시스템 (배에 미리 부착해두고 Emit만 사용합니다)
     [Tooltip("플레이어가 맞았을 때 튈 파티클 (배의 자식 오브젝트로 미리 넣어두세요)")]
     [SerializeField] private ParticleSystem hitParticleSystem; 
+
+    [Header("실행 페이즈 보간")]
+    [SerializeField] private float ghostVisualLerpSpeed = 15f;
+    [SerializeField] private float ghostRotationLerpSpeed = 10f;
+    [SerializeField] private float syncRotationMultiplier = 2f;
+    [SerializeField] private float manualTurnMultiplier = 100f;
+    [SerializeField] private float slipstreamLerpSpeed = 5f;
+    [SerializeField] private float lostSpeedPenalty = 0.8f;
+    [SerializeField] private float lostRecoveryRatio = 0.8f;
+    [SerializeField] private int hitParticleMultiplier = 5;
 
     private float currentSlipstreamMultiplier = 1.0f;
 
@@ -238,11 +250,11 @@ public class ShipController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (tracePoints.Count > 1 && Vector3.Distance(mousePos, tracePoints[tracePoints.Count - 1]) < 3f)
+            if (tracePoints.Count > 1 && Vector3.Distance(mousePos, tracePoints[tracePoints.Count - 1]) < pathContinueDistance)
             {
                 isDrawing = true;
             }
-            else if (Vector3.Distance(mousePos, transform.position) < 3f || tracePoints.Count <= 1) 
+            else if (Vector3.Distance(mousePos, transform.position) < pathContinueDistance || tracePoints.Count <= 1)
             {
                 isDrawing = true;
                 tracePoints.Clear();
@@ -260,7 +272,7 @@ public class ShipController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0) && isDrawing)
         {
-            if (tracePoints.Count > 0 && Vector3.Distance(tracePoints[tracePoints.Count - 1], mousePos) > 1f)
+            if (tracePoints.Count > 0 && Vector3.Distance(tracePoints[tracePoints.Count - 1], mousePos) > pointMinDistance)
             {
                 if (tracePoints.Count < maxTracePoints)
                 {
@@ -292,7 +304,7 @@ public class ShipController : MonoBehaviour
         }
 
         Vector2 dir = (target - ghostShipPos).normalized;
-        float lostAdventage = IsLost ? 0.8f : 1.0f;
+        float lostAdventage = IsLost ? lostSpeedPenalty : 1.0f;
         float currentGhostSpeed = ((baseSpeed + ghostAccelLevel * forwardAccel) * autoAccelMult * lostAdventage);
         
         Vector2 nextPos = ghostShipPos + dir * currentGhostSpeed * dt;
@@ -303,7 +315,7 @@ public class ShipController : MonoBehaviour
     private void UpdateGhostShipVisuals()
     {
         if (ghostShipInstance == null) return;
-        ghostShipInstance.transform.position = Vector3.Lerp(ghostShipInstance.transform.position, ghostShipPos, Time.deltaTime * 15f);
+        ghostShipInstance.transform.position = Vector3.Lerp(ghostShipInstance.transform.position, ghostShipPos, Time.deltaTime * ghostVisualLerpSpeed);
 
         if (ghostTargetIndex < tracePoints.Count)
         {
@@ -312,7 +324,7 @@ public class ShipController : MonoBehaviour
             {
                 float ghostAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 Quaternion targetRot = Quaternion.Euler(0, 0, ghostAngle);
-                ghostShipInstance.transform.rotation = Quaternion.Slerp(ghostShipInstance.transform.rotation, targetRot, Time.deltaTime * 10f);
+                ghostShipInstance.transform.rotation = Quaternion.Slerp(ghostShipInstance.transform.rotation, targetRot, Time.deltaTime * ghostRotationLerpSpeed);
             }
         }
     }
@@ -332,7 +344,7 @@ public class ShipController : MonoBehaviour
         }
 
         if (!IsLost && CurrentFateDeviation >= maxFateDistance) SetLostState(true);
-        else if (IsLost && CurrentFateDeviation < maxFateDistance * 0.8f) SetLostState(false);
+        else if (IsLost && CurrentFateDeviation < maxFateDistance * lostRecoveryRatio) SetLostState(false);
     }
 
     private void SetSyncState(bool state)
@@ -485,7 +497,7 @@ public class ShipController : MonoBehaviour
         if (ghostShipVelocity.sqrMagnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(ghostShipVelocity.y, ghostShipVelocity.x) * Mathf.Rad2Deg;
-            currentAngle = Mathf.LerpAngle(currentAngle, targetAngle, dt * turnSpeed * 2f);
+            currentAngle = Mathf.LerpAngle(currentAngle, targetAngle, dt * turnSpeed * syncRotationMultiplier);
         }
         currentSlipstreamMultiplier = 1.0f;
     }
@@ -493,7 +505,7 @@ public class ShipController : MonoBehaviour
     private void ExecuteManualMovement(float dt)
     {
         float turnInput = Input.GetAxisRaw("Horizontal");
-        currentAngle -= turnInput * turnSpeed * 100f * dt;
+        currentAngle -= turnInput * turnSpeed * manualTurnMultiplier * dt;
 
         float angleRad = currentAngle * Mathf.Deg2Rad;
         Vector2 forwardVec = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
@@ -509,7 +521,7 @@ public class ShipController : MonoBehaviour
             gripForce = dirToRail * (distToRail * slipstreamGripForce * (rb.linearVelocity.magnitude * 0.5f));
         }
 
-        currentSlipstreamMultiplier = Mathf.Lerp(currentSlipstreamMultiplier, targetSlipstreamMultiplier, dt * 5f);
+        currentSlipstreamMultiplier = Mathf.Lerp(currentSlipstreamMultiplier, targetSlipstreamMultiplier, dt * slipstreamLerpSpeed);
 
         float targetSpeed = (accelLevel >= 0) ? baseSpeed + (accelLevel * forwardAccel) : baseSpeed + (accelLevel * backwardAccel);
         if(!IsSynchronized) rb.AddForce((forwardVec * (targetSpeed * currentSlipstreamMultiplier)) + gripForce, ForceMode2D.Force);
@@ -544,7 +556,7 @@ public class ShipController : MonoBehaviour
         if (hitParticleSystem != null)
         {
             // 데미지 수치에 비례하여 파티클 입자 수를 늘림 (예: 1데미지당 5조각 방출)
-            hitParticleSystem.Emit(damage * 5); 
+            hitParticleSystem.Emit(damage * hitParticleMultiplier);
         }
 
         // 효과음 재생 (원하시는 피격음으로 변경 가능)

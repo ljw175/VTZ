@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
         {
             if (collider.gameObject == this.gameObject) continue;
             
-            if (collider.GetComponent<Enemy>() != null || collider.GetComponent<Island>() != null)
+            if (collider.GetComponent<Enemy>() != null || collider.GetComponent<ObstacleContact>() != null)
             {
                 Vector2 awayFromEnemy = (Vector2)transform.position - (Vector2)collider.transform.position;
                 float dist = awayFromEnemy.magnitude;

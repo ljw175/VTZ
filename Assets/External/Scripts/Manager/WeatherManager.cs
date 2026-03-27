@@ -7,7 +7,7 @@ public class WeatherManager : MonoBehaviour
     [Header("Weather Settings")]
     [SerializeField] private GameObject[] cloudPrefabs;
     [SerializeField] private int maxCloudCount = 10; // 생성할 구름의 총 개수
-    [SerializeField] private float worldSpawnOffset = 60.0f; // 파괴 경계(60f)와 맞춰서 재배치 시 자연스럽게 진입하도록 변경
+    [SerializeField] private float worldSpawnOffset = 510.0f; // 파괴 경계(60f)와 맞춰서 재배치 시 자연스럽게 진입하도록 변경
     [SerializeField] private float cloudSpeed = 3.0f;
 
     private void Awake()

@@ -285,12 +285,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 139521588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!114 &174337552 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4911592452141559502, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -434,12 +434,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 267020520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!114 &385292575 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2027331698453758410, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -575,12 +575,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 466864605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   playerTarget: {fileID: 651857578}
   mapBounds: {fileID: 1814476522}
-  planningOrthoSize: 50
+  planningOrthoSize: 500
   executionOrthoSize: 10
   zoomSmoothTime: 2
   offset: {x: 0, y: 0, z: -10}
@@ -995,12 +995,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 670765983}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &686166731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1144,12 +1144,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 760114439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &835026618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,11 +1211,7 @@ MonoBehaviour:
   rankText: {fileID: 1943878596}
   nameText: {fileID: 970670020}
   timeText: {fileID: 1004903940}
-  MaxGauge: 100
   CurrentGauge: 100
-  ConsumptionRate: 30
-  RecoveryRate: 10
-  RecoveryStartTime: 0.5
 --- !u!4 &835026620
 Transform:
   m_ObjectHideFlags: 0
@@ -1246,7 +1242,7 @@ MonoBehaviour:
   cloudPrefabs:
   - {fileID: 8427040957464176001, guid: dc6f78f2380e9cb42b063b498ec5cbaa, type: 3}
   maxCloudCount: 10
-  worldSpawnOffset: 60
+  worldSpawnOffset: 510
   cloudSpeed: 3
 --- !u!1 &857526430 stripped
 GameObject:
@@ -1263,7 +1259,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 332995915586086165, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
   m_PrefabInstance: {fileID: 1121420623421858892}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &899789439
+--- !u!114 &899789442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1272,12 +1268,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 899789436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  m_EditorClassIdentifier: Assembly-CSharp::ObstacleContact
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &907515159
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,12 +1368,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 956821476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &959122083 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3786028638363019205, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -1483,12 +1479,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 974536706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &999349123 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3105409308699876724, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -1519,12 +1515,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1215536966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!114 &1237674377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6524649994293580083, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -1659,6 +1655,14 @@ PrefabInstance:
     - target: {fileID: 4315260343027303916, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
       propertyPath: m_Name
       value: IngameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075348195239779173, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 15211
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075348195239779173, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 125731
       objectReference: {fileID: 0}
     - target: {fileID: 6149245629701918787, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1824,12 +1828,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1392412619}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &1427071471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,12 +1988,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1452040420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &1453943440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6280825395180048170, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -2009,12 +2013,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1500272754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &1588441751 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3065743257347535172, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -2134,12 +2138,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1636028291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &1672020994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2280,12 +2284,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1837391036}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!114 &1887357735 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7033641601068731949, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -2386,12 +2390,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1988219580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 025dfb94aef563a4f89f74a9751f0975, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FateKnockback
-  knockbackForce: 0
+  knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 1
+  damageAmount: 0
 --- !u!1 &2025473334 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 421690466770086979, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -2443,7 +2447,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
-  spawnMapRadius: 45
+  spawnMapRadius: 500
   safeRadius: 3
   playerSafeRadius: 15
   groupSpacing: 20
@@ -2517,13 +2521,6 @@ MonoBehaviour:
   gameClearTimerText: {fileID: 1289906136}
   currentTime: 0
   isRunning: 1
-  months: 1
-  weeks: 1
-  days: 0
-  hours: 0
-  minutes: 0
-  seconds: 0
-  milliseconds: 0
   player: {fileID: 651857578}
   timerWorldPosition: {fileID: 2118702401}
   fadeStartDistance: 4
@@ -2531,7 +2528,6 @@ MonoBehaviour:
   maxAlpha: 1
   minAlpha: 0.2
   reduceText: {fileID: 0}
-  accumulatedAmount: 0
   effectDuration: 1
 --- !u!4 &2118702401
 Transform:
@@ -2633,6 +2629,18 @@ PrefabInstance:
       value: Island
       objectReference: {fileID: 0}
     - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2670,6 +2678,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1649414292020075035, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1756172417294977678, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
@@ -2953,7 +2965,7 @@ PrefabInstance:
       addedObject: {fileID: 1452040423}
     - targetCorrespondingSourceObject: {fileID: 332995915586086165, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 899789439}
+      addedObject: {fileID: 899789442}
     - targetCorrespondingSourceObject: {fileID: 8860974054832147154, guid: 6939ff1d4f9285c49a2e263aab93904e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1215536969}

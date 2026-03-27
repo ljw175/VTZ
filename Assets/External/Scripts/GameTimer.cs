@@ -1,12 +1,12 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
-using UnityEditor.Rendering;
 using System;
 
 public class GameTimer : MonoBehaviour
 {
-    public static GameTimer Instance;
+    public static GameTimer Instance { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,53 +20,54 @@ public class GameTimer : MonoBehaviour
     }
 
     [Header("UI Reference")]
-    public TextMeshProUGUI timerText;
-    public TextMeshProUGUI timerToDayText;
-    public TextMeshProUGUI timerToWeekText;
-    public TextMeshProUGUI timerToMonthText;
-    public TextMeshProUGUI gameOverTimerText;
-    public TextMeshProUGUI gameClearTimerText;
+    [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI timerToDayText;
+    [SerializeField] private TextMeshProUGUI timerToWeekText;
+    [SerializeField] private TextMeshProUGUI timerToMonthText;
+    [SerializeField] private TextMeshProUGUI gameOverTimerText;
+    [SerializeField] private TextMeshProUGUI gameClearTimerText;
 
     [Header("Timer Settings")]
-    public float currentTime = 0;
-    public bool isRunning = true;
-    public int months = 1;
-    public int weeks = 1;
-    public int days = 1;
-    public int hours;
-    public int minutes;
-    public int seconds;
-    public int milliseconds;
+    [SerializeField] private float currentTime = 0;
+    [SerializeField] private bool isRunning = true;
 
-    public event Action<int> OnMonthChanged; // 달이 바뀔 때 발생하는 이벤트
-    public event Action<int> OnWeekChanged;  // 주가 바뀔 때 발생하는 이벤트
+    public float CurrentTime => currentTime;
+    public int Months { get; private set; } = 1;
+    public int Weeks { get; private set; } = 1;
+    public int Days { get; private set; } = 1;
+
+    private int hours;
+    private int minutes;
+    private int seconds;
+
+    public event Action<int> OnMonthChanged;
+    public event Action<int> OnWeekChanged;
 
     private int previousTotalDays = -1;
     private int currentYear = 1;
     private readonly int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     [Header("Distance Fading Settings")]
-    public Transform player; // 플레이어의 Transform
-    public Transform timerWorldPosition; // 거리를 잴 타이머의 월드 위치 (비워두면 이 스크립트가 붙은 오브젝트 기준)
-    
-    public float fadeStartDistance = 10f; // 이 거리보다 가까워지면 투명해지기 시작함
-    public float fadeEndDistance = 3f;    // 이 거리보다 가까워지면 최소 투명도 유지
-    
-    [Range(0f, 1f)] public float maxAlpha = 1f;   // 멀리 있을 때의 투명도 (1 = 완전 불투명)
-    [Range(0f, 1f)] public float minAlpha = 0f; // 가까이 있을 때의 투명도 (0.2 = 많이 투명함)
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform timerWorldPosition;
+
+    [SerializeField] private float fadeStartDistance = 10f;
+    [SerializeField] private float fadeEndDistance = 3f;
+
+    [SerializeField, Range(0f, 1f)] private float maxAlpha = 1f;
+    [SerializeField, Range(0f, 1f)] private float minAlpha = 0f;
 
     [Header("Time Reduce Settings")]
-    public TextMeshProUGUI reduceText;
-    public float accumulatedAmount = 0f;
-    public float effectDuration = 1f;
-    public Coroutine effectCoroutine;
+    [SerializeField] private TextMeshProUGUI reduceText;
+    [SerializeField] private float effectDuration = 1f;
+    private float accumulatedAmount = 0f;
+    private Coroutine effectCoroutine;
 
     void Start()
     {
-        // 기준점 위치를 따로 할당하지 않았다면, 이 스크립트가 붙은 오브젝트를 기준으로 삼습니다.
         if (timerWorldPosition == null)
         {
-            timerWorldPosition = this.transform;
+            timerWorldPosition = transform;
         }
 
         if (GameManager.Instance != null)
@@ -87,13 +88,11 @@ public class GameTimer : MonoBehaviour
 
     void Update()
     {
-        // 1. 타이머 시간 계산
         if (isRunning && GameManager.Instance.CurrentPhase != GamePhase.Paused)
         {
             currentTime += Time.deltaTime;
             UpdateTimerDisplay();
 
-            // 총 며칠(24초당 1일)이 지났는지 계산
             int currentTotalDays = Mathf.FloorToInt(currentTime / 24f);
             if (currentTotalDays != previousTotalDays)
             {
@@ -124,7 +123,7 @@ public class GameTimer : MonoBehaviour
     void UpdateTimerDisplay()
     {
         hours = Mathf.FloorToInt(currentTime / 3600f);
-        minutes = Mathf.FloorToInt((currentTime % 3600f) / 60f);
+        minutes = Mathf.FloorToInt(currentTime % 3600f / 60f);
         seconds = Mathf.FloorToInt(currentTime % 60f);
 
         timerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
@@ -132,7 +131,6 @@ public class GameTimer : MonoBehaviour
 
     void UpdateCalendar(int totalDays)
     {
-        // 월(Month) 및 일(Day) 계산
         int tempDays = totalDays;
         int tempMonth = 1;
         int tempYear = 1;
@@ -140,14 +138,12 @@ public class GameTimer : MonoBehaviour
         while (true)
         {
             int maxDays = daysInMonth[tempMonth - 1];
-            
-            // 윤년 계산 (4년에 한 번 2월은 29일)
-            if (tempMonth == 2 && (tempYear % 4 == 0 && (tempYear % 100 != 0 || tempYear % 400 == 0)))
+
+            if (tempMonth == 2 && tempYear % 4 == 0 && (tempYear % 100 != 0 || tempYear % 400 == 0))
             {
                 maxDays = 29;
             }
 
-            // 남은 일수가 이번 달의 최대 일수보다 크거나 같다면 다음 달로 넘어감
             if (tempDays >= maxDays)
             {
                 tempDays -= maxDays;
@@ -164,18 +160,17 @@ public class GameTimer : MonoBehaviour
             }
         }
 
-        int previousMonth = months;
-        int previousWeek = weeks;
+        int previousMonth = Months;
+        int previousWeek = Weeks;
 
-        months = tempMonth;
-        days = 1 + tempDays;
+        Months = tempMonth;
+        Days = 1 + tempDays;
         currentYear = tempYear;
 
-        // 주(Week) 계산: 현재 달의 몇 주차인지 계산 (1~5주차)
-        weeks = Mathf.FloorToInt((days - 1) / 7f) + 1;
+        Weeks = Mathf.FloorToInt((Days - 1) / 7f) + 1;
 
-        if (previousMonth != months && OnMonthChanged != null) OnMonthChanged.Invoke(months);
-        if (previousWeek != weeks && OnWeekChanged != null) OnWeekChanged.Invoke(weeks);
+        if (previousMonth != Months) OnMonthChanged?.Invoke(Months);
+        if (previousWeek != Weeks) OnWeekChanged?.Invoke(Weeks);
 
         UpdateDayTimerDisplay();
         UpdateWeekTimerDisplay();
@@ -185,45 +180,47 @@ public class GameTimer : MonoBehaviour
     void UpdateDayTimerDisplay()
     {
         if (timerToDayText != null)
-            timerToDayText.text = string.Format("{0:0}", days);
+            timerToDayText.text = string.Format("{0:0}", Days);
     }
 
     void UpdateWeekTimerDisplay()
     {
-        if (timerToWeekText != null && weeks == 1)
-            timerToWeekText.text = string.Format("{0:0}st Week", weeks);
-        else if (timerToWeekText != null && weeks == 2)
-            timerToWeekText.text = string.Format("{0:0}nd Week", weeks);
-        else if (timerToWeekText != null && weeks == 3)
-            timerToWeekText.text = string.Format("{0:0}rd Week", weeks);
-        else if (timerToWeekText != null && weeks > 3)
-            timerToWeekText.text = string.Format("{0:0}th Week", weeks);
+        if (timerToWeekText == null) return;
+
+        string suffix = Weeks switch
+        {
+            1 => "st",
+            2 => "nd",
+            3 => "rd",
+            _ => "th"
+        };
+        timerToWeekText.text = $"{Weeks}{suffix} Week";
     }
 
     void UpdateMonthTimerDisplay()
     {
         if (timerToMonthText != null)
-            timerToMonthText.text = string.Format("{0:0}", months);
+            timerToMonthText.text = string.Format("{0:0}", Months);
     }
 
     void UpdateGameOverDisplay()
     {
-        if (days == 1)
-        gameOverTimerText.text = string.Format("DEATH: " + " Jan. {0:00}st", days);
-        else if (days == 2)
-        gameOverTimerText.text = string.Format("DEATH: " + " Jan. {0:00}nd", days);
-        else if (days == 3)
-        gameOverTimerText.text = string.Format("DEATH: " + " Jan. {0:00}rd", days);
-        else
-        gameOverTimerText.text = string.Format("DEATH: " + "Jan. {0:00}th", days);
+        string suffix = Days switch
+        {
+            1 => "st",
+            2 => "nd",
+            3 => "rd",
+            _ => "th"
+        };
+        gameOverTimerText.text = $"DEATH: Jan. {Days:00}{suffix}";
     }
 
     void UpdateGameClearDisplay()
     {
         hours = Mathf.FloorToInt(currentTime / 3600f);
-        minutes = Mathf.FloorToInt((currentTime % 3600f) / 60f);
+        minutes = Mathf.FloorToInt(currentTime % 3600f / 60f);
         seconds = Mathf.FloorToInt(currentTime % 60f);
-        
+
         gameClearTimerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 
@@ -259,7 +256,7 @@ public class GameTimer : MonoBehaviour
 
             yield return null;
         }
-        
+
         reduceText.gameObject.SetActive(false);
         accumulatedAmount = 0f;
         effectCoroutine = null;

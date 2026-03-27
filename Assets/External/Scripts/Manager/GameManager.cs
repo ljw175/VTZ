@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public enum GamePhase { Paused, Replay, RealTime }
+public enum GamePhase { Paused, RealTime }
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 
     public event Action OnGameOver;
     public event Action OnGameClear;
-    public event Action OnPlanningStarted;
     public event Action OnPlanningEnded;
 
     public bool IsPaused { get; private set; }
@@ -72,10 +71,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Gauge(Steering) Settings")]
     [SerializeField] private float CurrentGauge = 100f;
-    [SerializeField] private float RecoveryStartTime = 1f;
 
-    private Coroutine chargeGaugeCor;
-    private bool secondPanelReady = false; 
+
+    private bool secondPanelReady = false;
     private string playerName;
     
     public bool IsSteeringMode { get; private set; } = false;
@@ -88,7 +86,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else { Destroy(gameObject); return; }
         
-        OnPlanningEnded += StartChargeWait;
         OnPlanningEnded += HandlePathLimitUI;
 
         CurrentMaxSyncRate = absoluteMaxSyncRate;
@@ -212,7 +209,7 @@ public class GameManager : MonoBehaviour
         switch (CurrentPhase)
         {
             case GamePhase.Paused: OnPlanningEnded?.Invoke(); break;
-            case GamePhase.RealTime: OnPlanningStarted?.Invoke(); break;
+            case GamePhase.RealTime: break;
         }
 
         CurrentPhase = nextPhase;
@@ -223,9 +220,8 @@ public class GameManager : MonoBehaviour
                 AudioManager.Instance.SetSlowBgm(); 
                 SetPlanningUIAndCursor(true);
                 break;
-            case GamePhase.Replay:
-            case GamePhase.RealTime: 
-                AudioManager.Instance.SetNormalBgm(); 
+            case GamePhase.RealTime:
+                AudioManager.Instance.SetNormalBgm();
                 SetPlanningUIAndCursor(false);
                 break;
         }
@@ -273,7 +269,7 @@ public class GameManager : MonoBehaviour
     public void OnFirstPanelSubmit()
     {
         playerName = string.IsNullOrEmpty(nameInputField.text) ? "Unnamed" : nameInputField.text;
-        LeaderboardManager.Instance.AddScore(playerName, GameTimer.Instance.currentTime);
+        LeaderboardManager.Instance.AddScore(playerName, GameTimer.Instance.CurrentTime);
         firstClearPanel.SetActive(false); secondClearPanel.SetActive(true);
         clearText.SetActive(false); timerText.SetActive(false);
         UpdateSecondPanelLeaderboard();
@@ -323,8 +319,6 @@ public class GameManager : MonoBehaviour
         IsSteeringMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
     
-    private void StartChargeWait() { if (chargeGaugeCor != null) StopCoroutine(chargeGaugeCor); chargeGaugeCor = StartCoroutine(WaitChargeGauge()); }
-    private IEnumerator WaitChargeGauge() { yield return new WaitForSeconds(RecoveryStartTime); }
     #endregion
 
     #region Scene Interaction

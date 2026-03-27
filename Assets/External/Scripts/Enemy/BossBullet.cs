@@ -106,7 +106,7 @@ public class BossBullet : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
             AttackData attackData = gameObject.GetComponent<AttackData>();
-            attackData.Damage = 5;
+            if (attackData != null) attackData.Damage = damage;
 
             return;
         }   
@@ -114,15 +114,6 @@ public class BossBullet : MonoBehaviour
 
     private IEnumerator DestroyAfterTime()
     {
-        float timer = 0f;
-        while (timer < lifetime)
-        {
-            if (GameManager.Instance.CurrentPhase != GamePhase.Paused)
-            {
-                timer += Time.deltaTime;
-            }
-            yield return null;
-        }
-        Destroy(gameObject);
+        return CoroutineHelper.DestroyAfterPausedTime(gameObject, lifetime);
     }
 }

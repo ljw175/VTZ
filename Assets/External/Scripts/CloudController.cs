@@ -4,8 +4,8 @@ public class CloudController : MonoBehaviour
 {
     [SerializeField] private float speed = 2.0f;
     private Vector3 moveDirection;
-    private float boundsX = 60f; // World Bounds 보다 조금 크게 설정하여 완전히 나간 뒤 파괴
-    private float boundsY = 60f;
+    private float boundsX = 510f; // World Bounds 보다 조금 크게 설정하여 완전히 나간 뒤 파괴
+    private float boundsY = 510f;
 
     public void Initialize(Vector3 dir, float customSpeed)
     {

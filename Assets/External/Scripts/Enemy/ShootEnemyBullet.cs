@@ -108,15 +108,6 @@ public class ShootEnemyBullet : MonoBehaviour
 
     private IEnumerator DestroyAfterTime()
     {
-        float timer = 0f;
-        while (timer < lifetime)
-        {
-            if (GameManager.Instance.CurrentPhase != GamePhase.Paused)
-            {
-                timer += Time.deltaTime;
-            }
-            yield return null;
-        }
-        Destroy(gameObject);
+        return CoroutineHelper.DestroyAfterPausedTime(gameObject, lifetime);
     }
 }

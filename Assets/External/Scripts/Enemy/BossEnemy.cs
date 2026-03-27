@@ -55,17 +55,7 @@ public class BossEnemy : Enemy
 
     private IEnumerator PausedWait(float time)
     {
-        float timer = 0f;
-        while (timer < time)
-        {
-            if (GameManager.Instance.CurrentPhase == GamePhase.Paused)
-            {
-                yield return null;
-                continue;
-            }
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        return CoroutineHelper.PausedWait(time);
     }
 
 
@@ -159,7 +149,9 @@ public class BossEnemy : Enemy
     private void Dash()
     {
         AudioManager.Instance.PlayEpicMobDash();
-        Vector2 dir = (target.position - transform.position).normalized;
+        Vector2 dir = target != null
+            ? (target.position - transform.position).normalized
+            : transform.right;
         StartCoroutine(DashAttackRoutine(dir));
     }
 

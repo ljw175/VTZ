@@ -938,12 +938,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6892968917303159334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56da1cd47c8f765499dc4c9a9bf9c5ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 07c6d4c749d6604489427c2ebbdf2a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Knockback
   knockbackForce: 15
   upwardsModifier: 0
-  damageAmount: 5
+  damageAmount: 0
 --- !u!1 &7550606957735860269
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find Assets/External -type f -name *.asset)",
+      "Read(//c/Users/jungle/OneDrive/文档/GitHub/Trace/Assets/External/**)",
+      "Read(//c/Users/jungle/OneDrive/문档/GitHub/Trace/Assets/External/**)",
+      "Bash(find . -name *.cs -type f)",
+      "Read(//c/Users/jungle/OneDrive/文서/GitHub/Trace/Assets/External/**)",
+      "Bash(grep -v \"//\")"
+    ]
+  }
+}
