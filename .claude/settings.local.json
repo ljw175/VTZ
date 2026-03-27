@@ -6,7 +6,10 @@
       "Read(//c/Users/jungle/OneDrive/문档/GitHub/Trace/Assets/External/**)",
       "Bash(find . -name *.cs -type f)",
       "Read(//c/Users/jungle/OneDrive/文서/GitHub/Trace/Assets/External/**)",
-      "Bash(grep -v \"//\")"
+      "Bash(grep -v \"//\")",
+      "Bash(find /c/Users/jungle/OneDrive/문서/GitHub/Trace/Assets/External/Scripts -type f -name *.cs)",
+      "Bash(ls Assets/External/Scripts/*.cs)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
