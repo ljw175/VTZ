@@ -22,5 +22,6 @@ MonoBehaviour:
   cloudMoveSpeed: 1
   cloudLifetime: 15
   effectRadius: 10
+  effectParticle: {fileID: 7529394493185834358, guid: 70df24dbb0117064d882e5bfbf503015, type: 3}
   statEffects: []
-  hullDamagePerSecond: 0
+  hullDamagePerSecond: 0.1

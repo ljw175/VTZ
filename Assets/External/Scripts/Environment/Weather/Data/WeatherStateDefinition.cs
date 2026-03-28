@@ -21,6 +21,8 @@ public class WeatherStateDefinition : ScriptableObject
     [Header("Effect")]
     [Tooltip("날씨 효과가 미치는 반경")]
     public float effectRadius = 30f;
+    [Tooltip("효과 반경을 시각적으로 표시하는 파티클 프리팹")]
+    public ParticleSystem effectParticle;
     [Tooltip("해당 날씨 상태에서 선박에 적용되는 스탯 수정자")]
     public StatModifier[] statEffects;
 

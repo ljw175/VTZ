@@ -15,14 +15,17 @@ MonoBehaviour:
   stateName: Cloudy
   transitions:
   - targetState: {fileID: 11400000}
-    probability: 0.7
-  - targetState: {fileID: 11400000, guid: 72b185a5585871f458b29a2f26d53b2d, type: 2}
+    probability: 0.5
+  - targetState: {fileID: 11400000, guid: 3b1d98ab36201d14aa164fbeb8d8cc5e, type: 2}
     probability: 0.25
+  - targetState: {fileID: 11400000, guid: 72b185a5585871f458b29a2f26d53b2d, type: 2}
+    probability: 0.2
   - targetState: {fileID: 11400000, guid: b67b6ccdf2aac314a9640ce28ba79f5a, type: 2}
     probability: 0.05
-  cloudColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  cloudColor: {r: 0.6392157, g: 0.7647059, b: 0.78431374, a: 1}
   cloudMoveSpeed: 5
   cloudLifetime: -1
   effectRadius: 0
+  effectParticle: {fileID: 0}
   statEffects: []
   hullDamagePerSecond: 0

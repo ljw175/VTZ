@@ -1257,7 +1257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeatherManager
   cloudPrefabs:
   - {fileID: 8427040957464176001, guid: dc6f78f2380e9cb42b063b498ec5cbaa, type: 3}
-  maxCloudCount: 15
+  maxCloudCount: 3
   worldSpawnOffset: 510
   defaultWeatherState: {fileID: 11400000, guid: 0786b654b0a7dc948b3f737521219a48, type: 2}
   cloudSpeed: 7

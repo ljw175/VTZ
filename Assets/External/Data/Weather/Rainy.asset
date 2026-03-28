@@ -13,16 +13,24 @@ MonoBehaviour:
   m_Name: Rainy
   m_EditorClassIdentifier: Assembly-CSharp::WeatherStateDefinition
   stateName: Rainy
-  transitions: []
-  cloudColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+  transitions:
+  - targetState: {fileID: 11400000, guid: f2621dda8e95a474da7a31f691acec02, type: 2}
+    probability: 0.3
+  - targetState: {fileID: 11400000, guid: b67b6ccdf2aac314a9640ce28ba79f5a, type: 2}
+    probability: 0.7
+  cloudColor: {r: 0.3490566, g: 0.40784314, b: 0.41568628, a: 1}
   cloudMoveSpeed: 3
-  cloudLifetime: 10
-  effectRadius: 30
+  cloudLifetime: -1
+  effectRadius: 10
+  effectParticle: {fileID: 7529394493185834358, guid: 75611de5cfcce8e4fbd98669ec94a8b4, type: 3}
   statEffects:
   - StatType: 0
     ModType: 1
-    Value: -0.3
+    Value: -0.2
   - StatType: 8
     ModType: 1
     Value: 0.5
+  - StatType: 16
+    ModType: 1
+    Value: -0.5
   hullDamagePerSecond: 0

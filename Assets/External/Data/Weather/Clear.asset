@@ -15,10 +15,15 @@ MonoBehaviour:
   stateName: Clear
   transitions:
   - targetState: {fileID: 11400000}
-    probability: 1
-  cloudColor: {r: 1, g: 1, b: 1, a: 0.3529412}
+    probability: 0.1
+  - targetState: {fileID: 11400000, guid: 0786b654b0a7dc948b3f737521219a48, type: 2}
+    probability: 0.55
+  - targetState: {fileID: 11400000, guid: 3b1d98ab36201d14aa164fbeb8d8cc5e, type: 2}
+    probability: 0.35
+  cloudColor: {r: 1, g: 1, b: 1, a: 0}
   cloudMoveSpeed: 3
-  cloudLifetime: 3
+  cloudLifetime: -1
   effectRadius: 0
+  effectParticle: {fileID: 0}
   statEffects: []
   hullDamagePerSecond: 0

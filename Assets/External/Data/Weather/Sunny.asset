@@ -15,12 +15,17 @@ MonoBehaviour:
   stateName: Sunny
   transitions:
   - targetState: {fileID: 11400000}
-    probability: 0.85
+    probability: 0.2
+  - targetState: {fileID: 11400000, guid: 3b1d98ab36201d14aa164fbeb8d8cc5e, type: 2}
+    probability: 0
   - targetState: {fileID: 11400000, guid: fa637981f02f88544b5927516a5bf952, type: 2}
-    probability: 0.15
-  cloudColor: {r: 1, g: 1, b: 1, a: 1}
+    probability: 0
+  - targetState: {fileID: 11400000, guid: 72b185a5585871f458b29a2f26d53b2d, type: 2}
+    probability: 0.8
+  cloudColor: {r: 0.82382524, g: 0.9190789, b: 0.9339623, a: 1}
   cloudMoveSpeed: 7
   cloudLifetime: -1
   effectRadius: 0
+  effectParticle: {fileID: 0}
   statEffects: []
   hullDamagePerSecond: 0

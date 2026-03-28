@@ -92,9 +92,10 @@ public class WeatherManager : MonoBehaviour
 
         cloud.transform.position = spawnPos;
 
-        // 날씨 상태 유지하면서 재배치
-        float moveSpeed = cloud.CurrentWeatherState != null ? cloud.CurrentWeatherState.cloudMoveSpeed : cloudSpeed;
-        cloud.Initialize(moveDir, moveSpeed);
+        // defaultWeatherState로 초기화 후 재배치
+        cloud.Initialize(moveDir, defaultWeatherState != null ? defaultWeatherState.cloudMoveSpeed : cloudSpeed);
+        if (defaultWeatherState != null)
+            cloud.InitializeWeather(defaultWeatherState);
     }
 
     private void HandleDayChanged(int day)
@@ -120,6 +121,8 @@ public class WeatherManager : MonoBehaviour
         float roll = Random.value;
         float cumulative = 0f;
 
+        Debug.Log($"[Weather Transition] '{cloud.gameObject.name}' rolling transition — current: '{currentState.stateName}', roll: {roll:F3}");
+
         for (int i = 0; i < currentState.transitions.Length; i++)
         {
             cumulative += currentState.transitions[i].probability;
@@ -128,7 +131,12 @@ public class WeatherManager : MonoBehaviour
                 var targetState = currentState.transitions[i].targetState;
                 if (targetState != null && targetState != currentState)
                 {
+                    Debug.Log($"[Weather Transition] '{cloud.gameObject.name}' transitioning: '{currentState.stateName}' → '{targetState.stateName}' (roll: {roll:F3}, threshold: {cumulative:F3})");
                     cloud.TransitionWeather(targetState);
+                }
+                else
+                {
+                    Debug.Log($"[Weather Transition] '{cloud.gameObject.name}' staying at '{currentState.stateName}' (roll: {roll:F3}, threshold: {cumulative:F3})");
                 }
                 return;
             }

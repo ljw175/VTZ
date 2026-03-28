@@ -12,11 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92f82391812b43418f2845a88548a1d, type: 3}
   m_Name: Windy
   m_EditorClassIdentifier: Assembly-CSharp::WeatherStateDefinition
-  stateName: 
-  transitions: []
-  cloudColor: {r: 1, g: 1, b: 1, a: 1}
-  cloudMoveSpeed: 3
+  stateName: Windy
+  transitions:
+  - targetState: {fileID: 11400000}
+    probability: 0
+  - targetState: {fileID: 11400000, guid: 0786b654b0a7dc948b3f737521219a48, type: 2}
+    probability: 0
+  - targetState: {fileID: 11400000, guid: fa637981f02f88544b5927516a5bf952, type: 2}
+    probability: 0
+  cloudColor: {r: 0.8235294, g: 0.91764706, b: 0.93333334, a: 1}
+  cloudMoveSpeed: 9
   cloudLifetime: -1
-  effectRadius: 30
-  statEffects: []
+  effectRadius: 10
+  effectParticle: {fileID: 0}
+  statEffects:
+  - StatType: 0
+    ModType: 1
+    Value: 0.25
+  - StatType: 2
+    ModType: 1
+    Value: -0.2
+  - StatType: 9
+    ModType: 1
+    Value: 0.5
   hullDamagePerSecond: 0
