@@ -7,41 +7,42 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D), typeof(LineRenderer))]
 public class ShipController : MonoBehaviour
 {
-    // ... (이전과 동일한 변수 선언부) ...
+    [Header("Ship Configuration")]
+    [SerializeField] private ShipDefinition shipDefinition;
+    private ShipRuntimeState runtimeState;
+    public IShipStatsProvider StatsProvider => runtimeState;
+
     [Header("항해 및 조작 속도 (선박형)")]
-    [SerializeField] private float baseSpeed = 0f;
     [SerializeField] private float accelLevel = 1.0f;
     [SerializeField] private float ghostAccelLevel = 2.0f;
-    [SerializeField] private float forwardAccel = 2.0f;     
-    [SerializeField] private float backwardAccel = 1.0f;    
-    [SerializeField] private float autoAccelMult = 1.0f;   
-    [SerializeField] private float turnSpeed = 0.5f;         
-    [SerializeField] private float waterFriction = 1.5f;  
+    [SerializeField] private float forwardAccel = 2.0f;
+    [SerializeField] private float backwardAccel = 1.0f;
+    [SerializeField] private float autoAccelMult = 1.0f;  
 
     [Header("항해 및 선박 조작 UI/UX")]
     [SerializeField] private TextMeshProUGUI speedDisplay;
 
     [Header("운명 궤도 시각 효과와 UI")]
+    [Tooltip("결합 범위 표시 오브젝트")]
     [SerializeField] private GameObject attachRangeIndicator;
     [SerializeField] private GameObject fateDeviationIndicator;
     [SerializeField] private GameObject fateLostUI;
     [SerializeField] private Slider fateDeviationSlider;
 
     [Header("유령선과 슬립스트림 시각 효과")]
+    [Tooltip("유령선 오브젝트")]
     [SerializeField] private GameObject ghostShipPrefab;
     [SerializeField] private Material slipstreamLineMaterial;
+    [Tooltip("슬립스트림 라인 너비")]
     [SerializeField] private float slipstreamLineWidth = 0.3f;
     private GameObject ghostShipInstance;
 
     [Header("운명 동기화(Sync) 설정")]
-    [SerializeField] private float detachThreshold = 3.0f; 
-    [SerializeField] private float attachThreshold = 2.0f;
-    public float maxFateDistance = 15f; 
+    [Tooltip("결합 범위 내에 들어왔을때 끌어들이는 스프링 강도")]
     [SerializeField] private float syncSpringForce = 1f;
 
     [Header("슬립스트림(궤적 추적) 설정")]
-    [SerializeField] private float maxSlipstreamMultiplier = 1.2f;
-    [SerializeField] private float slipstreamRadius = 2.0f;
+    [Tooltip("슬립스트림 라인에 작용하는 자력")]
     [SerializeField] private float slipstreamGripForce = 3.0f;
 
     [Header("항해 경로(Planning) 설정")]
@@ -52,8 +53,8 @@ public class ShipController : MonoBehaviour
     private float rewindTimer = 0f;
 
     [Header("체력 및 피격 설정")]
-    [SerializeField] private int maxHp = 10;
-    public int CurrentHp { get; private set; }
+    public int CurrentHp => runtimeState != null ? runtimeState.CurrentHp : 0;
+    public float maxFateDistance => runtimeState != null ? runtimeState.MaxFateDistance : 15f;
     
     // [추가완료] 피격 파티클 시스템 (배에 미리 부착해두고 Emit만 사용합니다)
     [Tooltip("플레이어가 맞았을 때 튈 파티클 (배의 자식 오브젝트로 미리 넣어두세요)")]
@@ -113,11 +114,15 @@ public class ShipController : MonoBehaviour
 
     private void Awake()
     {
+        runtimeState = new ShipRuntimeState(shipDefinition);
+        runtimeState.OnHpChanged += (cur, max) => OnHpChanged?.Invoke(cur, max);
+        runtimeState.OnStatsRecalculated += OnStatsRecalculated;
+
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = 0f;
-        rb.linearDamping = waterFriction; 
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; 
+        rb.linearDamping = runtimeState.GetStat(ShipStatType.WaterFriction);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
         if (cannonShooter == null) cannonShooter = GetComponentInChildren<CharacterShoot>();
@@ -126,16 +131,26 @@ public class ShipController : MonoBehaviour
         {
             ghostShipInstance = Instantiate(ghostShipPrefab, transform.position, Quaternion.identity);
             ghostShipInstance.SetActive(false);
-            
+
             if (attachRangeIndicator != null)
             {
+                float attachThreshold = runtimeState.GetStat(ShipStatType.AttachThreshold);
                 attachRangeIndicator.transform.SetParent(ghostShipInstance.transform, false);
                 attachRangeIndicator.transform.localPosition = Vector3.zero;
                 attachRangeIndicator.transform.localScale = new Vector3(attachThreshold * 2, attachThreshold * 2, 1f);
             }
         }
+    }
 
-        CurrentHp = maxHp;
+    private void OnStatsRecalculated()
+    {
+        rb.linearDamping = runtimeState.GetStat(ShipStatType.WaterFriction);
+
+        if (attachRangeIndicator != null)
+        {
+            float attachThreshold = runtimeState.GetStat(ShipStatType.AttachThreshold);
+            attachRangeIndicator.transform.localScale = new Vector3(attachThreshold * 2, attachThreshold * 2, 1f);
+        }
     }
 
     private void Start()
@@ -161,7 +176,7 @@ public class ShipController : MonoBehaviour
         }
 
         // 시작 시 초기 체력 UI 동기화
-        OnHpChanged?.Invoke(CurrentHp, maxHp);
+        OnHpChanged?.Invoke(runtimeState.CurrentHp, runtimeState.MaxHp);
     }
 
     public void ResetPathForNextWave()
@@ -305,7 +320,7 @@ public class ShipController : MonoBehaviour
 
         Vector2 dir = (target - ghostShipPos).normalized;
         float lostAdventage = IsLost ? lostSpeedPenalty : 1.0f;
-        float currentGhostSpeed = ((baseSpeed + ghostAccelLevel * forwardAccel) * autoAccelMult * lostAdventage);
+        float currentGhostSpeed = ((runtimeState.GetStat(ShipStatType.Speed) + ghostAccelLevel * forwardAccel) * autoAccelMult * lostAdventage);
         
         Vector2 nextPos = ghostShipPos + dir * currentGhostSpeed * dt;
         ghostShipVelocity = (nextPos - ghostShipPos) / dt;
@@ -334,17 +349,22 @@ public class ShipController : MonoBehaviour
         CurrentFateDeviation = Vector2.Distance(transform.position, ghostShipPos);
         bool isHoldingShift = GameManager.Instance.IsSteeringMode;
 
+        float detachThreshold = runtimeState.GetStat(ShipStatType.DetachThreshold);
+        float attachThreshold = runtimeState.GetStat(ShipStatType.AttachThreshold);
+        float maxFateDist = runtimeState.GetStat(ShipStatType.MaxFateDistance);
+        float slipRadius = runtimeState.GetStat(ShipStatType.SlipstreamRadius);
+
         if (IsSynchronized && isHoldingShift) { SetSyncState(false); isVoluntarilyDetached = true; }
-        if (isVoluntarilyDetached && CurrentFateDeviation > slipstreamRadius) isVoluntarilyDetached = false;
+        if (isVoluntarilyDetached && CurrentFateDeviation > slipRadius) isVoluntarilyDetached = false;
 
         if (!isVoluntarilyDetached)
         {
-            if (IsSynchronized && (CurrentFateDeviation > detachThreshold || CurrentFateDeviation >= maxFateDistance)) SetSyncState(false);
+            if (IsSynchronized && (CurrentFateDeviation > detachThreshold || CurrentFateDeviation >= maxFateDist)) SetSyncState(false);
             else if (!IsSynchronized && CurrentFateDeviation <= attachThreshold) SetSyncState(true);
         }
 
-        if (!IsLost && CurrentFateDeviation >= maxFateDistance) SetLostState(true);
-        else if (IsLost && CurrentFateDeviation < maxFateDistance * lostRecoveryRatio) SetLostState(false);
+        if (!IsLost && CurrentFateDeviation >= maxFateDist) SetLostState(true);
+        else if (IsLost && CurrentFateDeviation < maxFateDist * lostRecoveryRatio) SetLostState(false);
     }
 
     private void SetSyncState(bool state)
@@ -386,7 +406,8 @@ public class ShipController : MonoBehaviour
             Vector2 projection = a + t * ab;
 
             float distSqr = (currentPos - projection).sqrMagnitude;
-            if (distSqr < slipstreamRadius * slipstreamRadius && distSqr < minDistSqr)
+            float slipRadius = runtimeState.GetStat(ShipStatType.SlipstreamRadius);
+            if (distSqr < slipRadius * slipRadius && distSqr < minDistSqr)
             {
                 minDistSqr = distSqr; nearestPoint = projection; segmentStartIndex = i; found = true;
             }
@@ -402,7 +423,8 @@ public class ShipController : MonoBehaviour
         Vector2 ab = b - a; Vector2 ap = currentPos - a;
         float t = Vector2.Dot(ap, ab) / ab.sqrMagnitude;
         Vector2 projection = a + t * ab;
-        if (t >= 0.8f && (currentPos - projection).sqrMagnitude <= (slipstreamRadius * slipstreamRadius))
+        float consumeSlipRadius = runtimeState.GetStat(ShipStatType.SlipstreamRadius);
+        if (t >= 0.8f && (currentPos - projection).sqrMagnitude <= (consumeSlipRadius * consumeSlipRadius))
         {
             tracePoints.RemoveAt(0); ghostTargetIndex--; 
         }
@@ -497,7 +519,7 @@ public class ShipController : MonoBehaviour
         if (ghostShipVelocity.sqrMagnitude > 0.1f)
         {
             float targetAngle = Mathf.Atan2(ghostShipVelocity.y, ghostShipVelocity.x) * Mathf.Rad2Deg;
-            currentAngle = Mathf.LerpAngle(currentAngle, targetAngle, dt * turnSpeed * syncRotationMultiplier);
+            currentAngle = Mathf.LerpAngle(currentAngle, targetAngle, dt * runtimeState.GetStat(ShipStatType.TurnSpeed) * syncRotationMultiplier);
         }
         currentSlipstreamMultiplier = 1.0f;
     }
@@ -505,7 +527,7 @@ public class ShipController : MonoBehaviour
     private void ExecuteManualMovement(float dt)
     {
         float turnInput = Input.GetAxisRaw("Horizontal");
-        currentAngle -= turnInput * turnSpeed * manualTurnMultiplier * dt;
+        currentAngle -= turnInput * runtimeState.GetStat(ShipStatType.TurnSpeed) * manualTurnMultiplier * dt;
 
         float angleRad = currentAngle * Mathf.Deg2Rad;
         Vector2 forwardVec = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
@@ -515,7 +537,7 @@ public class ShipController : MonoBehaviour
 
         if (!isVoluntarilyDetached && TryGetSlipstreamData(out Vector2 nearestPoint, out int segmentIndex) && !IsSynchronized)
         {
-            targetSlipstreamMultiplier = maxSlipstreamMultiplier;
+            targetSlipstreamMultiplier = runtimeState.GetStat(ShipStatType.SlipstreamMultiplier);
             Vector2 dirToRail = (nearestPoint - (Vector2)transform.position).normalized;
             float distToRail = Vector2.Distance(transform.position, nearestPoint);
             gripForce = dirToRail * (distToRail * slipstreamGripForce * (rb.linearVelocity.magnitude * 0.5f));
@@ -523,7 +545,8 @@ public class ShipController : MonoBehaviour
 
         currentSlipstreamMultiplier = Mathf.Lerp(currentSlipstreamMultiplier, targetSlipstreamMultiplier, dt * slipstreamLerpSpeed);
 
-        float targetSpeed = (accelLevel >= 0) ? baseSpeed + (accelLevel * forwardAccel) : baseSpeed + (accelLevel * backwardAccel);
+        float shipSpeed = runtimeState.GetStat(ShipStatType.Speed);
+        float targetSpeed = (accelLevel >= 0) ? shipSpeed + (accelLevel * forwardAccel) : shipSpeed + (accelLevel * backwardAccel);
         if(!IsSynchronized) rb.AddForce((forwardVec * (targetSpeed * currentSlipstreamMultiplier)) + gripForce, ForceMode2D.Force);
         else rb.AddForce((forwardVec * targetSpeed) + gripForce, ForceMode2D.Force);
     }
@@ -547,27 +570,22 @@ public class ShipController : MonoBehaviour
     {
         if (GameManager.Instance.CurrentPhase == GamePhase.Paused) return;
 
-        CurrentHp -= damage;
+        runtimeState.TakeDamage(damage);
 
-        // [추가완료] 체력이 변경되었음을 UI 등에 알림
-        OnHpChanged?.Invoke(CurrentHp, maxHp);
-
-        // [추가완료] 성능 최적화와 타격감을 위한 Emit 방식 파티클 방출
+        // 성능 최적화와 타격감을 위한 Emit 방식 파티클 방출
         if (hitParticleSystem != null)
         {
-            // 데미지 수치에 비례하여 파티클 입자 수를 늘림 (예: 1데미지당 5조각 방출)
             hitParticleSystem.Emit(damage * hitParticleMultiplier);
         }
 
-        // 효과음 재생 (원하시는 피격음으로 변경 가능)
+        // 효과음 재생
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PlayPlayerDeath(); 
+            AudioManager.Instance.PlayPlayerDeath();
         }
 
-        if (CurrentHp <= 0)
+        if (runtimeState.CurrentHp <= 0)
         {
-            CurrentHp = 0;
             GameManager.Instance.GameOver();
         }
     }

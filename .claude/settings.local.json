@@ -42,7 +42,8 @@
       "Bash(rm \"$S/Combat/FateSync/FateSyncSystem.cs\" \"$S/Combat/FateSync/FateSyncSystem.cs.meta\")",
       "Bash(rm \"$S/Player/CannonAimHelper.cs\" \"$S/Player/CannonAimHelper.cs.meta\")",
       "Bash(rmdir \"$S/Combat/FateSync\")",
-      "Bash(rm \"$S/Combat/FateSync.meta\")"
+      "Bash(rm \"$S/Combat/FateSync.meta\")",
+      "Bash(python3 -c:*)"
     ]
   }
 }

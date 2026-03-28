@@ -179,7 +179,15 @@ public class GameManager : MonoBehaviour
 
         if (IsDetached)
         {
+            float efficiencyModifier = 1f;
+            if (shipController != null && shipController.StatsProvider != null)
+            {
+                float efficiency = shipController.StatsProvider.GetStat(ShipStatType.FuelEfficiency);
+                efficiencyModifier = 1f / Mathf.Max(0.1f, efficiency);
+            }
+
             float currentDepletionRate = isShipLost ? (syncDepletionRate * lostDepletionMultiplier) : syncDepletionRate;
+            currentDepletionRate *= efficiencyModifier;
             float currentMaxPenaltyRate = isShipLost ? (maxSyncPenaltyRate * lostDepletionMultiplier) : maxSyncPenaltyRate;
 
             CurrentFateSyncRate -= currentDepletionRate * Time.deltaTime;

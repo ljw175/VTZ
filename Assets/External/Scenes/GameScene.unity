@@ -908,6 +908,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 572274840}
     - target: {fileID: 1036222269345955011, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
+      propertyPath: shipDefinition
+      value: 
+      objectReference: {fileID: 11400000, guid: 8117a1cbc7cbbdf40b08c3adf01e0df6, type: 2}
+    - target: {fileID: 1036222269345955011, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
       propertyPath: maxFateDistance
       value: 10
       objectReference: {fileID: 0}
@@ -927,6 +931,18 @@ PrefabInstance:
       propertyPath: fateDeviationIndicator
       value: 
       objectReference: {fileID: 443471377}
+    - target: {fileID: 1036222269345955011, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
+      propertyPath: slipstreamLineMaterial
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4997190373680605742, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
+      propertyPath: m_Parameters.textureScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997190373680605742, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
+      propertyPath: m_Parameters.textureScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5992537981668252337, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

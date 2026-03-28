@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3101b23d9cc59db4190ca1cccf620365, type: 3}
+  m_Name: DefaultSloop
+  m_EditorClassIdentifier: Assembly-CSharp::ShipDefinition
+  shipName: 
+  description: 
+  shipSprite: {fileID: 0}
+  shipPrefab: {fileID: 6903252855027750859, guid: 50d3c782e60082f4b8908ef5909ed456, type: 3}
+  size: 0
+  purpose: 0
+  baseSpeed: 0
+  baseAcceleration: 2
+  baseTurnSpeed: 0.5
+  baseWaterFriction: 1.5
+  baseHullHp: 10
+  baseCargoCapacity: 10
+  baseCrewCapacity: 5
+  baseFuelEfficiency: 1
+  baseDetachThreshold: 3
+  baseAttachThreshold: 2
+  baseMaxFateDistance: 15
+  baseSlipstreamRadius: 2
+  baseSlipstreamMultiplier: 1.2
+  baseCannonDamage: 1
+  baseCannonCooldown: 0.5
+  baseCannonRange: 15
+  baseEnemyVisibilityRadius: 10
+  partSlots: []
