@@ -1,0 +1,18 @@
+using System.Collections.Generic;
+
+public interface IInventoryContainer
+{
+    string ContainerId { get; }
+    InventoryContainerType ContainerType { get; }
+    InventoryGridState GridState { get; }
+
+    bool TryAddItem(ItemInstance item);
+    bool TryPlaceItem(ItemInstance item, int x, int y, int rotation);
+    bool RemoveItem(ItemInstance item);
+
+    float GetTotalWeight();
+    float GetWeightCapacity();
+    bool HasWeightCapacity(float additionalWeight);
+
+    List<ItemInstance> AutoSort();
+}
