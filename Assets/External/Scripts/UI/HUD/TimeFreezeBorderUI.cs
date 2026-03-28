@@ -58,6 +58,8 @@ public class TimeFreezeBorderUI : MonoBehaviour
 
         SetupBorderMaterials();
         ApplyDim(0f);
+
+        if (dimImage != null) dimImage.raycastTarget = false;
     }
 
     private void OnDestroy()

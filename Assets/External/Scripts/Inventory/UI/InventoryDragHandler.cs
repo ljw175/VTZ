@@ -29,7 +29,7 @@ public class InventoryDragHandler : MonoBehaviour
         if (!IsDragging) return;
 
         // R키로 드래그 중 회전
-        if (Input.GetKeyDown(KeyCode.R))
+        if (InputManager.Instance.InventoryRotate.WasPressedThisFrame())
         {
             int maxRot = draggedItem.Definition.maxRotations;
             if (maxRot > 1)
@@ -40,7 +40,7 @@ public class InventoryDragHandler : MonoBehaviour
         }
 
         // ESC로 드래그 취소
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager.Instance.InventoryCancel.WasPressedThisFrame())
         {
             CancelDrag();
         }
@@ -155,7 +155,7 @@ public class InventoryDragHandler : MonoBehaviour
 
         // 그리드 위에 있으면 배치 미리보기
         InventoryGridUI hoverGrid = FindGridUnderMouse();
-        if (hoverGrid != null && hoverGrid.ScreenToGridPosition(Input.mousePosition, out int gx, out int gy))
+        if (hoverGrid != null && hoverGrid.ScreenToGridPosition(InputManager.Instance.MousePos, out int gx, out int gy))
         {
             hoverGrid.ShowPlacementPreview(draggedItem.Definition, gx, gy, dragRotation, draggedItem.InstanceId);
         }
@@ -229,7 +229,7 @@ public class InventoryDragHandler : MonoBehaviour
     {
         var eventData = new PointerEventData(EventSystem.current)
         {
-            position = Input.mousePosition
+            position = InputManager.Instance.MousePos
         };
         return FindGridUnderCursor(eventData);
     }

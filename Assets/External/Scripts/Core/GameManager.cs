@@ -113,15 +113,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) TogglePause();
-        if (Input.GetKeyDown(KeyCode.Space) && CurrentPhase == GamePhase.Paused && !IsPaused) ChangePhase(GamePhase.RealTime);
-        if (Input.GetKeyDown(KeyCode.R) && !firstClearPanel.activeSelf) RestartGame();
-        
+        if (InputManager.Instance.Pause.WasPressedThisFrame()) TogglePause();
+        if (InputManager.Instance.StartPhase.WasPressedThisFrame() && CurrentPhase == GamePhase.Paused && !IsPaused) ChangePhase(GamePhase.RealTime);
+        if (InputManager.Instance.Restart.WasPressedThisFrame() && !firstClearPanel.activeSelf) RestartGame();
+
         HandleSteeringGauge();
         HandleFateSyncRate();
         HandlePathLimitUI();
 
-        if (secondPanelReady && secondClearPanel != null && secondClearPanel.activeSelf && Input.GetKeyDown(KeyCode.Return))
+        if (secondPanelReady && secondClearPanel != null && secondClearPanel.activeSelf && InputManager.Instance.Continue.WasPressedThisFrame())
         {
             secondClearPanel.SetActive(false);
             thirdClearPanel.SetActive(true);
@@ -324,7 +324,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Shift 키를 누르고 있는 동안만 활성화, 게이지 제약 삭제
-        IsSteeringMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        IsSteeringMode = InputManager.Instance.SteerMode.IsPressed();
     }
     
     #endregion

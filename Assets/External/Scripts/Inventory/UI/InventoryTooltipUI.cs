@@ -122,7 +122,7 @@ public class InventoryTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerE
         Camera cam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
-            Input.mousePosition + new Vector3(16f, -16f, 0f),
+            (Vector3)InputManager.Instance.MousePos + new Vector3(16f, -16f, 0f),
             cam,
             out Vector2 localPos
         );

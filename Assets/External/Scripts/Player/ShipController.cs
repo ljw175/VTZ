@@ -209,16 +209,17 @@ public class ShipController : MonoBehaviour
             UpdateLineRenderer();
             UpdateSyncState();
             UpdateCannonAngle();
-            if (Input.GetMouseButtonDown(0) && cannonShooter != null) cannonShooter.TryShoot(cannonAngle);
+            if (InputManager.Instance.Click.WasPressedThisFrame() && cannonShooter != null && !InputManager.Instance.IsPointerOverUI())
+                cannonShooter.TryShoot(cannonAngle);
         }
         speedDisplay.text = accelLevel.ToString();
         if (GameManager.Instance.CurrentPhase == GamePhase.RealTime && !IsSynchronized)
         {
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            if (InputManager.Instance.Accelerate.WasPressedThisFrame())
             {
                 accelLevel = Mathf.Clamp(accelLevel + 1f, -2f, 2f);
             }
-            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            else if (InputManager.Instance.Decelerate.WasPressedThisFrame())
             {
                 accelLevel = Mathf.Clamp(accelLevel - 1f, -2f, 2f);
             }
@@ -237,10 +238,12 @@ public class ShipController : MonoBehaviour
     #region Planning Phase
     private void HandlePlanningPhase()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (InputManager.Instance.IsPointerOverUI()) return;
+
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePos);
         mousePos.z = 0f;
 
-        if (Input.GetMouseButton(1))
+        if (InputManager.Instance.RightClick.IsPressed())
         {
             if (tracePoints.Count > 1) 
             {
@@ -264,7 +267,7 @@ public class ShipController : MonoBehaviour
         }
         else { rewindTimer = 0f; }
 
-        if (Input.GetMouseButtonDown(0))
+        if (InputManager.Instance.Click.WasPressedThisFrame())
         {
             if (tracePoints.Count > 1 && Vector3.Distance(mousePos, tracePoints[tracePoints.Count - 1]) < pathContinueDistance)
             {
@@ -275,8 +278,8 @@ public class ShipController : MonoBehaviour
                 isDrawing = true;
                 tracePoints.Clear();
                 tracePoints.Add(transform.position);
-                ghostShipPos = transform.position; 
-                ghostTargetIndex = 1;       
+                ghostShipPos = transform.position;
+                ghostTargetIndex = 1;
 
                 SetSyncState(true);
                 SetLostState(false);
@@ -286,7 +289,7 @@ public class ShipController : MonoBehaviour
                 UpdateLineRenderer();
             }
         }
-        else if (Input.GetMouseButton(0) && isDrawing)
+        else if (InputManager.Instance.Click.IsPressed() && isDrawing)
         {
             if (tracePoints.Count > 0 && Vector3.Distance(tracePoints[tracePoints.Count - 1], mousePos) > pointMinDistance)
             {
@@ -297,7 +300,7 @@ public class ShipController : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetMouseButtonUp(0)) isDrawing = false;
+        else if (InputManager.Instance.Click.WasReleasedThisFrame()) isDrawing = false;
     }
     #endregion
 
@@ -527,7 +530,7 @@ public class ShipController : MonoBehaviour
 
     private void ExecuteManualMovement(float dt)
     {
-        float turnInput = Input.GetAxisRaw("Horizontal");
+        float turnInput = InputManager.Instance.Steer.ReadValue<float>();
         currentAngle -= turnInput * runtimeState.GetStat(ShipStatType.TurnSpeed) * manualTurnMultiplier * dt;
 
         float angleRad = currentAngle * Mathf.Deg2Rad;
@@ -556,7 +559,7 @@ public class ShipController : MonoBehaviour
     private void UpdateCannonAngle()
     {
         if (cannonSprite == null) return;
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition); mousePos.z = 0f;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePos); mousePos.z = 0f;
 
         float mouseAngle = Mathf.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x) * Mathf.Rad2Deg;
         float leftSide = currentAngle + 90f; float rightSide = currentAngle - 90f;

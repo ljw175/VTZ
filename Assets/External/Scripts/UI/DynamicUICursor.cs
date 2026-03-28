@@ -43,7 +43,7 @@ public class DynamicUICursor : MonoBehaviour
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             parentCanvas.transform as RectTransform,
-            Input.mousePosition,
+            InputManager.Instance.MousePos,
             parentCanvas.worldCamera,
             out localCursorPoint
         );

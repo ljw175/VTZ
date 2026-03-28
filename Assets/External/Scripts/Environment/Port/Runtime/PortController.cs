@@ -42,7 +42,7 @@ public class PortController : MonoBehaviour
 
     private void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (playerInRange && InputManager.Instance.Interact.WasPressedThisFrame())
         {
             if (PortManager.Instance != null)
                 PortManager.Instance.OpenPort(definition);

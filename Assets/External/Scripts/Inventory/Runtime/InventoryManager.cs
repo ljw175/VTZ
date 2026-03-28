@@ -38,6 +38,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         ItemDatabase.Initialize(allItemDefinitions);
+        CreateContainers();
     }
 
     private void Start()
@@ -46,8 +47,6 @@ public class InventoryManager : MonoBehaviour
         var shipController = FindObjectOfType<ShipController>();
         if (shipController != null)
             shipRuntimeState = shipController.RuntimeState;
-
-        CreateContainers();
 
         if (GameTimer.Instance != null)
             GameTimer.Instance.OnDayChanged += HandleDayChanged;

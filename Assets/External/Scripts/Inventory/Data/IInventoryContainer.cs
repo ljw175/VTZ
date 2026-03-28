@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public interface IInventoryContainer
@@ -5,6 +6,8 @@ public interface IInventoryContainer
     string ContainerId { get; }
     InventoryContainerType ContainerType { get; }
     InventoryGridState GridState { get; }
+
+    event Action OnContainerChanged;
 
     bool TryAddItem(ItemInstance item);
     bool TryPlaceItem(ItemInstance item, int x, int y, int rotation);

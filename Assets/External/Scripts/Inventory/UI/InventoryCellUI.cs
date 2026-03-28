@@ -34,6 +34,7 @@ public class InventoryCellUI : MonoBehaviour
         if (image == null)
             image = gameObject.AddComponent<Image>();
 
+        image.raycastTarget = false;
         SetHighlight(CellHighlightState.None);
     }
 
