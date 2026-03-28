@@ -46,6 +46,17 @@ public static class ShipStatCalculator
         ShipDefinition definition,
         IEnumerable<ShipPartInstance> equippedParts)
     {
+        return CalculateAllStats(definition, equippedParts, null);
+    }
+
+    /// <summary>
+    /// 파츠 수정자와 환경 수정자(날씨, 해류 등)를 모두 합산하여 최종 스탯을 계산한다.
+    /// </summary>
+    public static Dictionary<ShipStatType, float> CalculateAllStats(
+        ShipDefinition definition,
+        IEnumerable<ShipPartInstance> equippedParts,
+        IEnumerable<StatModifier> externalModifiers)
+    {
         var allModifiers = new Dictionary<ShipStatType, List<StatModifier>>();
 
         if (equippedParts != null)
@@ -63,6 +74,18 @@ public static class ShipStatCalculator
                     }
                     allModifiers[mod.StatType].Add(mod);
                 }
+            }
+        }
+
+        if (externalModifiers != null)
+        {
+            foreach (var mod in externalModifiers)
+            {
+                if (!allModifiers.ContainsKey(mod.StatType))
+                {
+                    allModifiers[mod.StatType] = new List<StatModifier>();
+                }
+                allModifiers[mod.StatType].Add(mod);
             }
         }
 

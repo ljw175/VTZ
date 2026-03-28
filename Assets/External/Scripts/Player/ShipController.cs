@@ -11,6 +11,7 @@ public class ShipController : MonoBehaviour
     [SerializeField] private ShipDefinition shipDefinition;
     private ShipRuntimeState runtimeState;
     public IShipStatsProvider StatsProvider => runtimeState;
+    public ShipRuntimeState RuntimeState => runtimeState;
 
     [Header("항해 및 조작 속도 (선박형)")]
     [SerializeField] private float accelLevel = 1.0f;

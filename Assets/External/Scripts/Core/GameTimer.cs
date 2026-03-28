@@ -40,22 +40,19 @@ public class GameTimer : MonoBehaviour
     private int minutes;
     private int seconds;
 
+    public event Action<int> OnDayChanged;
     public event Action<int> OnMonthChanged;
     public event Action<int> OnWeekChanged;
 
     private int previousTotalDays = -1;
+    private int previousDay = -1;
     private int currentYear = 1;
+    public int CurrentYear => currentYear;
     private readonly int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     [Header("Distance Fading Settings")]
     [SerializeField] private Transform player;
     [SerializeField] private Transform timerWorldPosition;
-
-    [SerializeField] private float fadeStartDistance = 10f;
-    [SerializeField] private float fadeEndDistance = 3f;
-
-    [SerializeField, Range(0f, 1f)] private float maxAlpha = 1f;
-    [SerializeField, Range(0f, 1f)] private float minAlpha = 0f;
 
     [Header("Time Reduce Settings")]
     [SerializeField] private TextMeshProUGUI reduceText;
@@ -169,6 +166,7 @@ public class GameTimer : MonoBehaviour
 
         Weeks = Mathf.FloorToInt((Days - 1) / 7f) + 1;
 
+        if (previousDay != Days) { OnDayChanged?.Invoke(Days); previousDay = Days; }
         if (previousMonth != Months) OnMonthChanged?.Invoke(Months);
         if (previousWeek != Weeks) OnWeekChanged?.Invoke(Weeks);
 

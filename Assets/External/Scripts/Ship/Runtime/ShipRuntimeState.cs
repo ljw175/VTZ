@@ -14,6 +14,9 @@ public class ShipRuntimeState : IShipStatsProvider, IPartSlotProvider, IFateSync
     // --- Part Slots ---
     private Dictionary<string, ShipPartInstance> equippedParts = new Dictionary<string, ShipPartInstance>();
 
+    // --- Environmental Modifiers (weather, ocean currents, etc.) ---
+    private Dictionary<object, List<StatModifier>> envModifierSources = new Dictionary<object, List<StatModifier>>();
+
     // --- HP ---
     public int CurrentHp { get; private set; }
     public int MaxHp => Mathf.RoundToInt(GetStat(ShipStatType.HullHp));
@@ -49,9 +52,35 @@ public class ShipRuntimeState : IShipStatsProvider, IPartSlotProvider, IFateSync
         return cachedStats.TryGetValue(statType, out float value) ? value : 0f;
     }
 
+    // --- Environmental Modifier Access ---
+
+    public void AddEnvironmentalModifiers(object source, List<StatModifier> modifiers)
+    {
+        envModifierSources[source] = modifiers;
+        MarkDirty();
+    }
+
+    public void RemoveEnvironmentalModifiers(object source)
+    {
+        if (envModifierSources.Remove(source))
+            MarkDirty();
+    }
+
+    private IEnumerable<StatModifier> GatherEnvironmentalModifiers()
+    {
+        foreach (var kvp in envModifierSources)
+        {
+            for (int i = 0; i < kvp.Value.Count; i++)
+            {
+                yield return kvp.Value[i];
+            }
+        }
+    }
+
     private void RecalculateStats()
     {
-        cachedStats = ShipStatCalculator.CalculateAllStats(Definition, equippedParts.Values);
+        IEnumerable<StatModifier> envMods = envModifierSources.Count > 0 ? GatherEnvironmentalModifiers() : null;
+        cachedStats = ShipStatCalculator.CalculateAllStats(Definition, equippedParts.Values, envMods);
         isDirty = false;
 
         // MaxHp가 변경되었을 수 있으므로, CurrentHp가 새 MaxHp를 초과하지 않도록 클램프

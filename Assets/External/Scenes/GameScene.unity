@@ -1257,9 +1257,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeatherManager
   cloudPrefabs:
   - {fileID: 8427040957464176001, guid: dc6f78f2380e9cb42b063b498ec5cbaa, type: 3}
-  maxCloudCount: 10
+  maxCloudCount: 15
   worldSpawnOffset: 510
-  cloudSpeed: 3
+  defaultWeatherState: {fileID: 11400000, guid: 0786b654b0a7dc948b3f737521219a48, type: 2}
+  cloudSpeed: 7
 --- !u!1 &857526430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8054771317652755845, guid: aa5711bfd4371624998b8406437f1d04, type: 3}
@@ -2539,10 +2540,6 @@ MonoBehaviour:
   isRunning: 1
   player: {fileID: 651857578}
   timerWorldPosition: {fileID: 2118702401}
-  fadeStartDistance: 4
-  fadeEndDistance: 2
-  maxAlpha: 1
-  minAlpha: 0.2
   reduceText: {fileID: 0}
   effectDuration: 1
 --- !u!4 &2118702401

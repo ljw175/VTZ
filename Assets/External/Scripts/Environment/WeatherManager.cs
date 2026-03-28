@@ -1,14 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeatherManager : MonoBehaviour
 {
     public static WeatherManager Instance { get; private set; }
 
-    [Header("Weather Settings")]
+    [Header("Cloud Spawning")]
     [SerializeField] private GameObject[] cloudPrefabs;
-    [SerializeField] private int maxCloudCount = 10; // 생성할 구름의 총 개수
-    [SerializeField] private float worldSpawnOffset = 510.0f; // 파괴 경계(60f)와 맞춰서 재배치 시 자연스럽게 진입하도록 변경
+    [SerializeField] private int maxCloudCount = 10;
+    [SerializeField] private float worldSpawnOffset = 510.0f;
+
+    [Header("Weather Configuration")]
+    [SerializeField] private WeatherStateDefinition defaultWeatherState;
     [SerializeField] private float cloudSpeed = 3.0f;
+
+    private List<CloudController> activeClouds = new List<CloudController>();
 
     private void Awake()
     {
@@ -25,6 +31,15 @@ public class WeatherManager : MonoBehaviour
     private void Start()
     {
         InitializeClouds();
+
+        if (GameTimer.Instance != null)
+            GameTimer.Instance.OnDayChanged += HandleDayChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameTimer.Instance != null)
+            GameTimer.Instance.OnDayChanged -= HandleDayChanged;
     }
 
     private void InitializeClouds()
@@ -34,27 +49,33 @@ public class WeatherManager : MonoBehaviour
         for (int i = 0; i < maxCloudCount; i++)
         {
             GameObject prefab = cloudPrefabs[Random.Range(0, cloudPrefabs.Length)];
-            
-            // 초기 시작 시에는 화면 전역에 무작위로 분포하도록 생성
+
             float randomX = Random.Range(-worldSpawnOffset, worldSpawnOffset);
             float randomY = Random.Range(-worldSpawnOffset, worldSpawnOffset);
             Vector3 spawnPos = new Vector3(randomX, randomY, 0);
 
             GameObject spawnedCloud = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
-            
-            // 이동 방향 (좌 또는 우 지정)
+
             Vector3 moveDir = Random.value > 0.5f ? Vector3.right : Vector3.left;
-            
-            spawnedCloud.GetComponent<CloudController>()?.Initialize(moveDir, cloudSpeed);
+
+            CloudController cloud = spawnedCloud.GetComponent<CloudController>();
+            if (cloud != null)
+            {
+                cloud.Initialize(moveDir, defaultWeatherState != null ? defaultWeatherState.cloudMoveSpeed : cloudSpeed);
+
+                if (defaultWeatherState != null)
+                    cloud.InitializeWeather(defaultWeatherState);
+
+                activeClouds.Add(cloud);
+            }
         }
     }
 
-    // 구름이 경계를 벗어났을 때 반대편 위치에서 새롭게 시작하도록 설정
     public void RepositionCloud(CloudController cloud)
     {
         Vector3 spawnPos = Vector3.zero;
         Vector3 moveDir = Vector3.zero;
-        
+
         int spawnSide = Random.Range(0, 2);
 
         switch (spawnSide)
@@ -70,6 +91,47 @@ public class WeatherManager : MonoBehaviour
         }
 
         cloud.transform.position = spawnPos;
-        cloud.Initialize(moveDir, cloudSpeed);
+
+        // 날씨 상태 유지하면서 재배치
+        float moveSpeed = cloud.CurrentWeatherState != null ? cloud.CurrentWeatherState.cloudMoveSpeed : cloudSpeed;
+        cloud.Initialize(moveDir, moveSpeed);
+    }
+
+    private void HandleDayChanged(int day)
+    {
+        for (int i = activeClouds.Count - 1; i >= 0; i--)
+        {
+            if (activeClouds[i] == null)
+            {
+                activeClouds.RemoveAt(i);
+                continue;
+            }
+
+            RollWeatherTransition(activeClouds[i]);
+        }
+    }
+
+    private void RollWeatherTransition(CloudController cloud)
+    {
+        var currentState = cloud.CurrentWeatherState;
+        if (currentState == null || currentState.transitions == null || currentState.transitions.Length == 0)
+            return;
+
+        float roll = Random.value;
+        float cumulative = 0f;
+
+        for (int i = 0; i < currentState.transitions.Length; i++)
+        {
+            cumulative += currentState.transitions[i].probability;
+            if (roll <= cumulative)
+            {
+                var targetState = currentState.transitions[i].targetState;
+                if (targetState != null && targetState != currentState)
+                {
+                    cloud.TransitionWeather(targetState);
+                }
+                return;
+            }
+        }
     }
 }
