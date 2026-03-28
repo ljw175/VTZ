@@ -35,4 +35,7 @@ MonoBehaviour:
   baseCannonCooldown: 0.5
   baseCannonRange: 15
   baseEnemyVisibilityRadius: 10
-  partSlots: []
+  partSlots:
+  - slotId: 
+    slotType: 0
+    isRequired: 0
