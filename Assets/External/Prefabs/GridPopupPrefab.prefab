@@ -811,8 +811,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Container
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5b58492cd1ede2148950b3dc2bed8422, type: 2}
+  m_sharedMaterial: {fileID: 1445166443012209433, guid: 5b58492cd1ede2148950b3dc2bed8422, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
@@ -891,6 +891,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3531782252496757569}
   - component: {fileID: 6825224797656220825}
+  - component: {fileID: 1181901601609555609}
+  - component: {fileID: 7335545771791412106}
   m_Layer: 0
   m_Name: GridContainer
   m_TagString: Untagged
@@ -933,6 +935,44 @@ MonoBehaviour:
   cellSize: 64
   cellSpacing: 2
   itemUIPrefab: {fileID: 6410753920355213438, guid: 959341a904f5c3c4c870cee383e52a71, type: 3}
+--- !u!222 &1181901601609555609
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058389297675598904}
+  m_CullTransparentMesh: 1
+--- !u!114 &7335545771791412106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058389297675598904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.31132078, g: 0.16180457, b: 0.1013261, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8200851538653048148
 GameObject:
   m_ObjectHideFlags: 0

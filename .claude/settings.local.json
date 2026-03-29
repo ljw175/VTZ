@@ -45,7 +45,9 @@
       "Bash(rm \"$S/Combat/FateSync.meta\")",
       "Bash(python3 -c:*)",
       "Bash(xargs grep:*)",
-      "Bash(grep -r \"InventorySaveData\\\\|ContainerSaveData\\\\|ItemSaveData\" /c/Users/jungle/VTZ/Assets/External/Scripts/Inventory --include=*.cs)"
+      "Bash(grep -r \"InventorySaveData\\\\|ContainerSaveData\\\\|ItemSaveData\" /c/Users/jungle/VTZ/Assets/External/Scripts/Inventory --include=*.cs)",
+      "Bash(grep -r \"class.*Drop\\\\|class.*Loot\\\\|class.*Reward\\\\|class.*Table\\\\|class.*Interact\\\\|class.*Target\\\\|class.*Pickup\" /c/Users/jungle/VTZ/Assets/External/Scripts --include=*.cs)",
+      "Bash(find /c/Users/jungle/VTZ/Assets/External/Scripts -type f -name \"*.cs\" -exec grep -l \"Drop\\\\|Loot\\\\|Reward\\\\|Gather\\\\|Collect\" {})"
     ]
   }
 }

@@ -8,6 +8,7 @@ public class InventoryContainer : IInventoryContainer
     public string DisplayName { get; private set; }
     public InventoryContainerType ContainerType { get; private set; }
     public InventoryGridState GridState { get; private set; }
+    public bool IsReadOnly { get; private set; }
 
     private Func<float> weightCapacityProvider;
 
@@ -20,6 +21,20 @@ public class InventoryContainer : IInventoryContainer
         ContainerType = gridDef.containerType;
         GridState = new InventoryGridState(gridDef.width, gridDef.height);
         weightCapacityProvider = capacityProvider;
+        IsReadOnly = false;
+
+        GridState.OnGridChanged += () => OnContainerChanged?.Invoke();
+    }
+
+    public InventoryContainer(string containerId, string displayName, InventoryContainerType type,
+        int width, int height, bool isReadOnly = false)
+    {
+        ContainerId = containerId;
+        DisplayName = displayName;
+        ContainerType = type;
+        GridState = new InventoryGridState(width, height);
+        weightCapacityProvider = () => -1f;
+        IsReadOnly = isReadOnly;
 
         GridState.OnGridChanged += () => OnContainerChanged?.Invoke();
     }
@@ -44,6 +59,7 @@ public class InventoryContainer : IInventoryContainer
 
     public bool TryAddItem(ItemInstance item)
     {
+        if (IsReadOnly) return false;
         if (item == null || item.Definition == null) return false;
         if (!HasWeightCapacity(item.Definition.weight)) return false;
 
@@ -52,6 +68,7 @@ public class InventoryContainer : IInventoryContainer
 
     public bool TryPlaceItem(ItemInstance item, int x, int y, int rotation)
     {
+        if (IsReadOnly) return false;
         if (item == null || item.Definition == null) return false;
 
         // 이미 이 그리드에 있는 아이템이면 무게 검사에서 자기 무게 제외

@@ -103,13 +103,20 @@ public class InventoryManager : MonoBehaviour
         if (item == null || source == null || target == null) return false;
         if (!target.HasWeightCapacity(item.Definition.weight)) return false;
 
+        // 원복용 상태 저장
+        int savedX = item.GridX;
+        int savedY = item.GridY;
+        int savedRot = item.RotationIndex;
+
         if (!source.RemoveItem(item)) return false;
 
         if (target.TryAddItem(item))
             return true;
 
-        // 이동 실패 시 원래 컨테이너에 복원
-        source.TryAddItem(item);
+        // 이동 실패 시 원래 컨테이너에 복원 (ReadOnly 컨테이너는 GridState 직접 사용)
+        if (!source.TryAddItem(item))
+            source.GridState.TryPlace(item, savedX, savedY, savedRot);
+
         return false;
     }
 

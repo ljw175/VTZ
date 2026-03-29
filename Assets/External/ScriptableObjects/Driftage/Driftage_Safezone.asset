@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a954d74cd447278478be93262aa136bd, type: 3}
+  m_Name: Driftage_Safezone
+  m_EditorClassIdentifier: Assembly-CSharp::DriftageDefinition
+  displayName: "\uD45C\uB958\uBB3C"
+  promptText: "E: \uC870\uC0AC\uD558\uAE30"
+  lootTable: {fileID: 11400000, guid: af963be0ad937b0408c854ebf5054b38, type: 2}
+  lootGridWidth: 3
+  lootGridHeight: 3

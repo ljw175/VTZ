@@ -7,6 +7,7 @@ public interface IInventoryContainer
     string DisplayName { get; }
     InventoryContainerType ContainerType { get; }
     InventoryGridState GridState { get; }
+    bool IsReadOnly { get; }
 
     event Action OnContainerChanged;
 

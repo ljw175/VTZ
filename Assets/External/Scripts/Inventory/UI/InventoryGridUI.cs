@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
+
 public class InventoryGridUI : MonoBehaviour
 {
     [Header("Cell Setup")]
@@ -47,6 +49,14 @@ public class InventoryGridUI : MonoBehaviour
         rt.pivot = new Vector2(0.5f, 0.5f);
         rt.anchoredPosition = Vector2.zero;
         rt.sizeDelta = new Vector2(w * totalCellSize, h * totalCellSize);
+
+        // 그리드 영역 전체를 raycast 대상으로 등록 (크로스 팝업 드래그 감지용)
+        var bgImage = GetComponent<Image>();
+        if (bgImage != null)
+        {
+            bgImage.color = Color.clear;
+            bgImage.raycastTarget = true;
+        }
 
         for (int y = 0; y < h; y++)
         {
@@ -214,8 +224,11 @@ public class InventoryGridUI : MonoBehaviour
             return false;
 
         float totalCellSize = cellSize + cellSpacing;
-        gridX = Mathf.FloorToInt(localPos.x / totalCellSize);
-        gridY = Mathf.FloorToInt(-localPos.y / totalCellSize);
+        // pivot(0.5,0.5) 기준 좌표를 좌상단 원점으로 변환
+        float halfW = rt.rect.width * 0.5f;
+        float halfH = rt.rect.height * 0.5f;
+        gridX = Mathf.FloorToInt((localPos.x + halfW) / totalCellSize);
+        gridY = Mathf.FloorToInt((halfH - localPos.y) / totalCellSize);
 
         return container.GridState.IsInBounds(gridX, gridY);
     }

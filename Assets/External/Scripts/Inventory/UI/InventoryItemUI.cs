@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private Image iconImage;
     private ItemInstance itemInstance;
@@ -82,13 +82,4 @@ public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         InventoryDragHandler.Instance?.EndDrag(eventData);
     }
 
-    // --- 우클릭 회전 ---
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button != PointerEventData.InputButton.Right) return;
-        if (itemInstance == null || parentGrid == null) return;
-
-        parentGrid.Container.GridState.TryRotate(itemInstance);
-    }
 }

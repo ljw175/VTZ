@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec6ed57e56279d41b8d6307dfc461a1, type: 3}
+  m_Name: Wood_Plank
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: wood_01
+  itemName: "\uD310\uC790"
+  description: "\uD754\uD558\uB2E4\uBA74 \uD754\uD558\uACE0, \uADC0\uD558\uB2E4\uBA74
+    \uADC0\uD55C \uAC83."
+  itemIcon: {fileID: 0}
+  categories: 136
+  tags: 72
+  shapeData:
+    baseOffsets:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+  maxRotations: 2
+  maxFreshness: -1
+  freshnessDecayPerDay: 1
+  weight: 1
+  baseValue: 10
+  effects:
+  - {fileID: 11400000, guid: 18a4b393859f4b744b37c1069bb277c0, type: 2}

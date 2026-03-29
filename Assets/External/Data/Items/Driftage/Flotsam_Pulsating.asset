@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec6ed57e56279d41b8d6307dfc461a1, type: 3}
+  m_Name: Flotsam_Pulsating
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: flotsam_01
+  itemName: "\uB9E5\uB3D9\uD558\uB294 \uBD80\uC720\uBB3C"
+  description: "\uBC14\uB2E4\uC5D0\uC11C \uBCC4\uC744 \uBAA8\uC0AC\uD558\uB824 \uD588\uB358
+    \uC5B4\uB5A4 \uC0DD\uBB3C\uC758 \uB9D0\uB85C. \uACF5\uAE30\uC5D0 \uB178\uCD9C\uB418\uBA74
+    \uD76C\uBBF8\uD558\uAC8C \uBE5B\uB09C\uB2E4."
+  itemIcon: {fileID: 0}
+  categories: 256
+  tags: 8
+  shapeData:
+    baseOffsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+  maxRotations: 1
+  maxFreshness: -1
+  freshnessDecayPerDay: 1
+  weight: 1
+  baseValue: 10
+  effects: []

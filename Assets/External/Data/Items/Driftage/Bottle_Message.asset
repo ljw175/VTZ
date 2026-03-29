@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec6ed57e56279d41b8d6307dfc461a1, type: 3}
+  m_Name: Bottle_Message
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: bottle_02
+  itemName: "\uC591\uD53C\uC9C0\uAC00 \uB4E0 \uBCD1"
+  description: "\uBE48 \uBCD1\uBCF4\uB2E4\uB294 \uB0AB\uB2E4."
+  itemIcon: {fileID: 9172446463320536940, guid: 7bdc68f1329e1f547b8b6758c9d8cfce, type: 3}
+  categories: 0
+  tags: 8
+  shapeData:
+    baseOffsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+  maxRotations: 2
+  maxFreshness: -1
+  freshnessDecayPerDay: 1
+  weight: 1
+  baseValue: 2
+  effects: []

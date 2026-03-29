@@ -20,7 +20,7 @@ public enum ItemTag
     Logging   = 1 << 0,
     Gathering = 1 << 1,
     Fishing   = 1 << 2,
-    Flotsam   = 1 << 3,
+    Driftage   = 1 << 3,
     Treasure  = 1 << 4,
     Crafted   = 1 << 5,
     Purchased = 1 << 6,
@@ -41,4 +41,5 @@ public enum InventoryContainerType
     ShipCargo,
     PlayerBackpack,
     PortStorage,
+    Loot,
 }

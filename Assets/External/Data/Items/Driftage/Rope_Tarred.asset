@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec6ed57e56279d41b8d6307dfc461a1, type: 3}
+  m_Name: Rope_Tarred
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
+  itemId: rope_02
+  itemName: "\uD0C0\uB974\uCE60\uD55C \uBC27\uC904"
+  description: "\uBD80\uC2DD\uC744 \uB9C9\uAE30 \uC704\uD574 \uAC80\uC740 \uD0C0\uB974\uB97C
+    \uC785\uD78C \uD2BC\uD2BC\uD55C \uBC27\uC904. "
+  itemIcon: {fileID: 0}
+  categories: 152
+  tags: 200
+  shapeData:
+    baseOffsets:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    - {x: 2, y: 0}
+    - {x: 2, y: 1}
+  maxRotations: 1
+  maxFreshness: -1
+  freshnessDecayPerDay: 1
+  weight: 1
+  baseValue: 10
+  effects: []

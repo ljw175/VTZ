@@ -28,19 +28,15 @@ public class InventoryDragHandler : MonoBehaviour
     {
         if (!IsDragging) return;
 
-        // R키로 드래그 중 회전
-        if (InputManager.Instance.InventoryRotate.WasPressedThisFrame())
+        // R키로 드래그 중 회전 (InputAction이 드래그 중 소비될 수 있으므로 직접 체크)
+        if (UnityEngine.InputSystem.Keyboard.current.rKey.wasPressedThisFrame)
         {
-            int maxRot = draggedItem.Definition.maxRotations;
-            if (maxRot > 1)
-            {
-                dragRotation = (dragRotation + 1) % maxRot;
-                UpdateGhostSize();
-            }
+            Debug.Log("R pressed");
+            TryRotateDragged();
         }
 
-        // ESC로 드래그 취소
-        if (InputManager.Instance.InventoryCancel.WasPressedThisFrame())
+        // 우클릭으로 드래그 취소
+        if (UnityEngine.InputSystem.Mouse.current.rightButton.wasPressedThisFrame)
         {
             CancelDrag();
         }
@@ -93,7 +89,7 @@ public class InventoryDragHandler : MonoBehaviour
         // 현재 커서 아래의 그리드 검색
         InventoryGridUI targetGrid = FindGridUnderCursor(eventData);
 
-        if (targetGrid != null)
+        if (targetGrid != null && !targetGrid.Container.IsReadOnly)
         {
             if (targetGrid.ScreenToGridPosition(eventData.position, out int gx, out int gy))
             {
@@ -105,9 +101,14 @@ public class InventoryDragHandler : MonoBehaviour
                 else
                 {
                     // 다른 그리드로 이동 (컨테이너 간 전송)
-                    sourceGrid.Container.GridState.StampItem(draggedItem); // 임시 복원
-                    placed = InventoryManager.Instance.TransferItem(
-                        draggedItem, sourceGrid.Container, targetGrid.Container);
+                    // 1. 소스에서 완전 제거 (Lift 상태이므로 Stamp 후 Remove)
+                    sourceGrid.Container.GridState.StampItem(draggedItem);
+                    sourceGrid.Container.GridState.RemoveItem(draggedItem);
+
+                    // 2. 타겟에 커서 위치로 배치 시도 → 실패 시 자동 배치
+                    placed = targetGrid.Container.TryPlaceItem(draggedItem, gx, gy, dragRotation);
+                    if (!placed)
+                        placed = targetGrid.Container.TryAddItem(draggedItem);
 
                     if (placed)
                     {
@@ -116,7 +117,8 @@ public class InventoryDragHandler : MonoBehaviour
                         return;
                     }
 
-                    sourceGrid.Container.GridState.LiftItem(draggedItem); // 다시 해제
+                    // 3. 실패: 소스에 직접 복원 (ReadOnly 우회)
+                    sourceGrid.Container.GridState.TryPlace(draggedItem, origX, origY, origRot);
                 }
             }
         }
@@ -131,7 +133,7 @@ public class InventoryDragHandler : MonoBehaviour
         }
 
         DestroyGhost();
-        sourceGrid.ResetAllHighlights();
+        ResetAllVisibleGridHighlights();
         CleanupDragState();
     }
 
@@ -145,8 +147,16 @@ public class InventoryDragHandler : MonoBehaviour
         sourceGrid.Container.GridState.StampItem(draggedItem);
 
         DestroyGhost();
-        sourceGrid.ResetAllHighlights();
+        ResetAllVisibleGridHighlights();
         CleanupDragState();
+    }
+
+    /// <summary>
+    /// 외부에서 드래그를 강제 취소 (팝업 닫힘 등)
+    /// </summary>
+    public void ForceCancelDrag()
+    {
+        CancelDrag();
     }
 
     private void UpdatePreview()
@@ -183,6 +193,18 @@ public class InventoryDragHandler : MonoBehaviour
 
         ghostTransform = ghost.GetComponent<RectTransform>();
         UpdateGhostSize();
+    }
+
+    private void TryRotateDragged()
+    {
+        if (draggedItem == null) return;
+
+        int maxRot = draggedItem.Definition.maxRotations;
+        if (maxRot <= 1) return;
+
+        dragRotation = (dragRotation + 1) % maxRot;
+        UpdateGhostSize();
+        UpdatePreview();
     }
 
     private void UpdateGhostSize()
@@ -223,6 +245,20 @@ public class InventoryDragHandler : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 열려있는 모든 그리드 팝업의 하이라이트를 초기화
+    /// </summary>
+    private void ResetAllVisibleGridHighlights()
+    {
+        if (sourceGrid != null)
+            sourceGrid.ResetAllHighlights();
+
+        // 마우스가 다른 그리드 위에 있었을 수 있으므로 해당 그리드도 초기화
+        InventoryGridUI hoverGrid = FindGridUnderMouse();
+        if (hoverGrid != null && hoverGrid != sourceGrid)
+            hoverGrid.ResetAllHighlights();
     }
 
     private InventoryGridUI FindGridUnderMouse()

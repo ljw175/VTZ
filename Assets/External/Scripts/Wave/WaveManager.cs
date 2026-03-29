@@ -24,10 +24,13 @@ public class WaveManager : MonoBehaviour
     public event Action<bool> OnWaveModeChanged;       
     public event Action<float, float> OnBossHpUpdated; 
 
-    [SerializeField] private WaveData[] waves; 
+    [SerializeField] private WaveData[] waves;
+    [SerializeField] private WaveLootData[] waveLootData;
+    [SerializeField] private DriftageSpawner driftageSpawner;
+
     private int currentWaveIndex = 0;
     private int enemiesRemainingAlive = 0;
-    private int totalEnemiesInCurrentWave = 0; 
+    private int totalEnemiesInCurrentWave = 0;
     private EnemySpawner enemySpawner;
 
     private bool isNextWeekReady = true; 
@@ -60,7 +63,9 @@ public class WaveManager : MonoBehaviour
             // [추가완료] 첫 웨이브(Index 0)가 아닐 경우, 다음 웨이브로 넘어가기 전 맵 청소 및 페이즈 초기화
             if (currentWaveIndex > 0)
             {
-                // 게임 루프의 핵심: 청소 -> 보존 -> 계획 페이즈 진입
+                if (driftageSpawner != null)
+                    driftageSpawner.ClearAll();
+
                 GameManager.Instance.PrepareNextWave();
             }
 
@@ -101,7 +106,17 @@ public class WaveManager : MonoBehaviour
                 }
             }
 
-            // 웨이브가 성공적으로 스폰되었으니 인덱스 증가
+            // 표류물 스폰
+            if (driftageSpawner != null && waveLootData != null && currentWaveIndex < waveLootData.Length)
+            {
+                var lootData = waveLootData[currentWaveIndex];
+                if (lootData != null && lootData.driftageSpawns != null)
+                {
+                    for (int i = 0; i < lootData.driftageSpawns.Length; i++)
+                        driftageSpawner.SpawnDriftage(lootData.driftageSpawns[i]);
+                }
+            }
+
             currentWaveIndex++;
         }
 
