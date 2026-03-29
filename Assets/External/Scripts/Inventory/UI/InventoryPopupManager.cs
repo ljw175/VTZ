@@ -34,18 +34,18 @@ public class InventoryPopupManager : MonoBehaviour
         {
             var cargo = InventoryManager.Instance.GetShipCargo();
             if (cargo != null)
-                TogglePopup(cargo, "화물칸");
+                TogglePopup(cargo);
         }
 
         if (InputManager.Instance.BackpackToggle.WasPressedThisFrame())
         {
             var backpack = InventoryManager.Instance.GetPlayerBackpack();
             if (backpack != null)
-                TogglePopup(backpack, "배낭");
+                TogglePopup(backpack);
         }
     }
 
-    public InventoryGridPopupUI OpenPopup(IInventoryContainer container, string title)
+    public InventoryGridPopupUI OpenPopup(IInventoryContainer container)
     {
         if (container == null || gridPopupPrefab == null) return null;
 
@@ -72,7 +72,7 @@ public class InventoryPopupManager : MonoBehaviour
             return null;
         }
 
-        popup.Setup(container, title);
+        popup.Setup(container);
 
         var window = obj.GetComponent<DraggableWindow>();
         if (window != null)
@@ -91,14 +91,14 @@ public class InventoryPopupManager : MonoBehaviour
             Destroy(popup.gameObject);
     }
 
-    public void TogglePopup(IInventoryContainer container, string title)
+    public void TogglePopup(IInventoryContainer container)
     {
         if (container == null) return;
 
         if (openPopups.ContainsKey(container.ContainerId))
             ClosePopup(container.ContainerId);
         else
-            OpenPopup(container, title);
+            OpenPopup(container);
     }
 
     public bool IsOpen(string containerId)

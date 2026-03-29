@@ -19,12 +19,14 @@ public class InventoryGridPopupUI : MonoBehaviour
     public IInventoryContainer Container { get; private set; }
     public InventoryGridUI GridUI => gridUI;
 
-    public void Setup(IInventoryContainer container, string title)
+    public void Setup(IInventoryContainer container)
     {
         Container = container;
 
         if (titleText != null)
-            titleText.text = title;
+            titleText.text = container.DisplayName;
+        else
+            Debug.LogWarning($"[GridPopup] titleText 참조가 null — 프리팹에서 TitleText가 연결되지 않음");
 
         if (gridUI != null)
             gridUI.Initialize(container);

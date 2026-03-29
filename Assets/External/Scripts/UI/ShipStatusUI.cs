@@ -1,15 +1,10 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ShipStatusUI : MonoBehaviour
 {
     [Header("Panel")]
     [SerializeField] private GameObject statusPanel;
-
-    [Header("Container Buttons")]
-    [SerializeField] private Button openCargoButton;
-    [SerializeField] private Button openBackpackButton;
 
     [Header("Stat Display")]
     [SerializeField] private TextMeshProUGUI speedText;
@@ -30,32 +25,6 @@ public class ShipStatusUI : MonoBehaviour
         var shipController = FindObjectOfType<ShipController>();
         if (shipController != null)
             shipState = shipController.RuntimeState;
-
-        if (openCargoButton != null)
-        {
-            openCargoButton.onClick.AddListener(() =>
-            {
-                if (InventoryPopupManager.Instance != null && InventoryManager.Instance != null)
-                {
-                    var cargo = InventoryManager.Instance.GetShipCargo();
-                    if (cargo != null)
-                        InventoryPopupManager.Instance.TogglePopup(cargo, "화물칸");
-                }
-            });
-        }
-
-        if (openBackpackButton != null)
-        {
-            openBackpackButton.onClick.AddListener(() =>
-            {
-                if (InventoryPopupManager.Instance != null && InventoryManager.Instance != null)
-                {
-                    var backpack = InventoryManager.Instance.GetPlayerBackpack();
-                    if (backpack != null)
-                        InventoryPopupManager.Instance.TogglePopup(backpack, "배낭");
-                }
-            });
-        }
     }
 
     private void Update()

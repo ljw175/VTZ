@@ -42,6 +42,10 @@ public class InventoryGridUI : MonoBehaviour
 
         float totalCellSize = cellSize + cellSpacing;
         RectTransform rt = GetComponent<RectTransform>();
+        rt.anchorMin = new Vector2(0.5f, 0.5f);
+        rt.anchorMax = new Vector2(0.5f, 0.5f);
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchoredPosition = Vector2.zero;
         rt.sizeDelta = new Vector2(w * totalCellSize, h * totalCellSize);
 
         for (int y = 0; y < h; y++)

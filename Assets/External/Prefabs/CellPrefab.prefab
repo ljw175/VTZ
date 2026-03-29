@@ -88,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92fd0f367aeab7d44ad63cb6d41e1927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCellUI
-  defaultColor: {r: 0.2, g: 0.2, b: 0.2, a: 0.8}
+  defaultColor: {r: 0.5, g: 0.20215899, b: 0.08254716, a: 0.627451}
   validColor: {r: 0, g: 0.8, b: 0, a: 0.5}
   invalidColor: {r: 0.8, g: 0, b: 0, a: 0.5}
   swapColor: {r: 0.8, g: 0.8, b: 0, a: 0.5}
-  occupiedColor: {r: 0.3, g: 0.3, b: 0.4, a: 0.8}
+  occupiedColor: {r: 0.7264151, g: 0.23486905, b: 0.08566215, a: 0.8}

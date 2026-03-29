@@ -65,10 +65,10 @@ public class InventoryTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerE
             {
                 string stateLabel = state switch
                 {
-                    FreshnessState.Fresh => "신선한",
-                    FreshnessState.Okay => "그저그런",
-                    FreshnessState.Aging => "숙성중인",
-                    FreshnessState.Rotten => "부패한",
+                    FreshnessState.Fresh => "Fresh",
+                    FreshnessState.Okay => "OK",
+                    FreshnessState.Aging => "Aging",
+                    FreshnessState.Rotten => "Rotten",
                     _ => ""
                 };
                 freshnessText.text = stateLabel;

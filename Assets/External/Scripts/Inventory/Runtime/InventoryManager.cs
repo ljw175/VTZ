@@ -52,6 +52,7 @@ public class InventoryManager : MonoBehaviour
             GameTimer.Instance.OnDayChanged += HandleDayChanged;
 
         Load();
+        Save();
     }
 
     private void OnDestroy()
@@ -68,7 +69,7 @@ public class InventoryManager : MonoBehaviour
                 shipCargoGridDef,
                 () => shipRuntimeState != null ? shipRuntimeState.GetStat(ShipStatType.CargoCapacity) : -1f
             );
-            shipCargoContainer.OnContainerChanged += () => OnInventoryChanged?.Invoke();
+            shipCargoContainer.OnContainerChanged += () => { OnInventoryChanged?.Invoke(); Save(); };
         }
 
         if (playerBackpackGridDef != null)
@@ -77,7 +78,7 @@ public class InventoryManager : MonoBehaviour
                 playerBackpackGridDef,
                 () => 20f
             );
-            playerBackpackContainer.OnContainerChanged += () => OnInventoryChanged?.Invoke();
+            playerBackpackContainer.OnContainerChanged += () => { OnInventoryChanged?.Invoke(); Save(); };
         }
     }
 
@@ -92,7 +93,7 @@ public class InventoryManager : MonoBehaviour
             return existing;
 
         var container = new InventoryContainer(gridDef, () => -1f);
-        container.OnContainerChanged += () => OnInventoryChanged?.Invoke();
+        container.OnContainerChanged += () => { OnInventoryChanged?.Invoke(); Save(); };
         portStorageContainers[portId] = container;
         return container;
     }
@@ -136,7 +137,7 @@ public class InventoryManager : MonoBehaviour
         {
             containers = GetAllContainers().Select(c => new ContainerSaveData
             {
-                gridId = c.ContainerId,
+                containerId = c.ContainerId,
                 width = c.GridState.Width,
                 height = c.GridState.Height,
                 items = c.GridState.PlacedItems.Select(item => new ItemSaveData
@@ -166,7 +167,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < saveData.containers.Count; i++)
         {
             var containerData = saveData.containers[i];
-            IInventoryContainer container = FindContainerByGridId(containerData.gridId);
+            IInventoryContainer container = FindContainerById(containerData.containerId);
             if (container == null) continue;
 
             for (int j = 0; j < containerData.items.Count; j++)
@@ -184,13 +185,13 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    private IInventoryContainer FindContainerByGridId(string gridId)
+    private IInventoryContainer FindContainerById(string containerId)
     {
-        if (shipCargoContainer != null && shipCargoContainer.ContainerId == gridId)
+        if (shipCargoContainer != null && shipCargoContainer.ContainerId == containerId)
             return shipCargoContainer;
-        if (playerBackpackContainer != null && playerBackpackContainer.ContainerId == gridId)
+        if (playerBackpackContainer != null && playerBackpackContainer.ContainerId == containerId)
             return playerBackpackContainer;
-        if (portStorageContainers.TryGetValue(gridId, out var port))
+        if (portStorageContainers.TryGetValue(containerId, out var port))
             return port;
         return null;
     }

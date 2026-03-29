@@ -44,7 +44,8 @@
       "Bash(rmdir \"$S/Combat/FateSync\")",
       "Bash(rm \"$S/Combat/FateSync.meta\")",
       "Bash(python3 -c:*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(grep -r \"InventorySaveData\\\\|ContainerSaveData\\\\|ItemSaveData\" /c/Users/jungle/VTZ/Assets/External/Scripts/Inventory --include=*.cs)"
     ]
   }
 }

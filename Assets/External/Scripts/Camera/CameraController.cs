@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
         // 항해 모드라면 카메라 위치를 맵 경계 내로 제한
         if (GameManager.Instance.CurrentPhase == GamePhase.RealTime)
         {
-            targetPos.x = Mathf.Clamp(targetPos.x, minBound.x + halfWidth, maxBound.x - halfWidth);
+            //targetPos.x = Mathf.Clamp(targetPos.x, minBound.x + halfWidth, maxBound.x - halfWidth);
             targetPos.y = Mathf.Clamp(targetPos.y, minBound.y + halfHeight, maxBound.y - halfHeight);
         }
 

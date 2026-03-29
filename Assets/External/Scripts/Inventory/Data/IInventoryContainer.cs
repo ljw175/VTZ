@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public interface IInventoryContainer
 {
     string ContainerId { get; }
+    string DisplayName { get; }
     InventoryContainerType ContainerType { get; }
     InventoryGridState GridState { get; }
 

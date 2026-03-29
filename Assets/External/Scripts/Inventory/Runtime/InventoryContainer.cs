@@ -5,6 +5,7 @@ using System.Linq;
 public class InventoryContainer : IInventoryContainer
 {
     public string ContainerId { get; private set; }
+    public string DisplayName { get; private set; }
     public InventoryContainerType ContainerType { get; private set; }
     public InventoryGridState GridState { get; private set; }
 
@@ -14,7 +15,8 @@ public class InventoryContainer : IInventoryContainer
 
     public InventoryContainer(InventoryGridDefinition gridDef, Func<float> capacityProvider)
     {
-        ContainerId = gridDef.gridId;
+        ContainerId = gridDef.containerType.ToString();
+        DisplayName = gridDef.displayName;
         ContainerType = gridDef.containerType;
         GridState = new InventoryGridState(gridDef.width, gridDef.height);
         weightCapacityProvider = capacityProvider;

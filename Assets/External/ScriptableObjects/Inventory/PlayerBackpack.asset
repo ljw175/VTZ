@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bc6880e73df944a8f3c8303925d49c, type: 3}
   m_Name: PlayerBackpack
   m_EditorClassIdentifier: Assembly-CSharp::InventoryGridDefinition
-  gridId: PlayerBackpack
-  displayName: "\uD50C\uB808\uC774\uC5B4 \uBC30\uB0AD"
+  gridId: backpack
+  displayName: Hidden Stash
   containerType: 1
   width: 5
   height: 4

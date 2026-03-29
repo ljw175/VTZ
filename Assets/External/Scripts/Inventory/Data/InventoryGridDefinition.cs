@@ -4,7 +4,6 @@ using UnityEngine;
 public class InventoryGridDefinition : ScriptableObject
 {
     [Header("Identity")]
-    public string gridId;
     public string displayName;
     public InventoryContainerType containerType;
 
