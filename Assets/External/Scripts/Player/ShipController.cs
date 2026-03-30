@@ -102,6 +102,8 @@ public class ShipController : MonoBehaviour
     
     public float GetTraceProgress() => maxTracePoints > 0 ? 1 - Mathf.Clamp01((float)tracePoints.Count / maxTracePoints) : 0f;
 
+    public bool IsDockedAtPort { get; private set; }
+
     private bool isVoluntarilyDetached = false;
 
     public event Action<bool> OnSyncStateChanged; 
@@ -197,8 +199,22 @@ public class ShipController : MonoBehaviour
         UpdateLineRenderer();
     }
 
+    public void ForceDock(Vector2 dockPosition)
+    {
+        accelLevel = 0f;
+        rb.linearVelocity = Vector2.zero;
+        transform.position = (Vector3)dockPosition;
+        IsDockedAtPort = true;
+    }
+
+    public void Undock()
+    {
+        IsDockedAtPort = false;
+    }
+
     private void Update()
     {
+        if (IsDockedAtPort) return;
         if (GameManager.Instance.CurrentPhase == GamePhase.Paused) HandlePlanningPhase();
         else if (GameManager.Instance.CurrentPhase == GamePhase.RealTime)
         {
@@ -228,6 +244,7 @@ public class ShipController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (IsDockedAtPort) { rb.linearVelocity = Vector2.zero; return; }
         if (GameManager.Instance.CurrentPhase == GamePhase.Paused) { rb.linearVelocity = Vector2.zero; return; }
         float fixedDt = Time.fixedDeltaTime;
         if (IsSynchronized) ExecuteSynchronizedMovement(fixedDt);

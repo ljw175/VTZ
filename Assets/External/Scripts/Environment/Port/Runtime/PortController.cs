@@ -42,10 +42,18 @@ public class PortController : MonoBehaviour
 
     private void Update()
     {
-        if (playerInRange && InputManager.Instance.Interact.WasPressedThisFrame())
+        if (!playerInRange) return;
+        if (!InputManager.Instance.Interact.WasPressedThisFrame()) return;
+        if (PortManager.Instance == null) return;
+
+        if (PortManager.Instance.IsDocked)
+            PortManager.Instance.ClosePort();
+        else
         {
-            if (PortManager.Instance != null)
-                PortManager.Instance.OpenPort(definition);
+            Vector2 dockPos = entryRangeIndicator != null
+                ? (Vector2)entryRangeIndicator.transform.position
+                : (Vector2)transform.position;
+            PortManager.Instance.OpenPort(definition, dockPos);
         }
     }
 

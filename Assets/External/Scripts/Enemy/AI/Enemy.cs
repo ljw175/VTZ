@@ -55,6 +55,13 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start() { }
 
+    protected bool IsTargetDetectable()
+    {
+        if (target == null) return false;
+        var ship = target.GetComponent<ShipController>();
+        return ship == null || !ship.IsDockedAtPort;
+    }
+
     protected virtual void Update()
 {
     if (GameManager.Instance.CurrentPhase == GamePhase.Paused)

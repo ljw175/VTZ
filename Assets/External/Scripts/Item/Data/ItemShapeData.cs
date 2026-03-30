@@ -9,6 +9,8 @@ public class ItemShapeData
 
     [NonSerialized] private Vector2Int[][] rotationCache;
 
+    public bool IsCacheBuilt => rotationCache != null && rotationCache.Length > 0;
+
     public void BuildRotationCache(int maxRotations)
     {
         maxRotations = Mathf.Clamp(maxRotations, 1, 4);
@@ -26,8 +28,11 @@ public class ItemShapeData
 
     public Vector2Int[] GetRotatedOffsets(int rotationIndex)
     {
-        if (rotationCache == null || rotationCache.Length == 0)
-            BuildRotationCache(1);
+        if (!IsCacheBuilt)
+        {
+            Debug.LogWarning("[ItemShapeData] rotationCache 미초기화 — ItemDatabase.Initialize 호출 여부를 확인하세요. fallback으로 4회전 캐시를 생성합니다.");
+            BuildRotationCache(4);
+        }
 
         rotationIndex = Mathf.Clamp(rotationIndex, 0, rotationCache.Length - 1);
         return rotationCache[rotationIndex];

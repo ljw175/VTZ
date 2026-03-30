@@ -12,9 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951939f3f10fca04082ecdaf78c23181, type: 3}
   m_Name: Eris Port
   m_EditorClassIdentifier: Assembly-CSharp::PortDefinition
-  portName: 
-  description: 
+  portName: "\uC5D0\uB9AC\uC2A4 \uD56D"
+  description: "\uBAA8\uC885\uC758 \uC774\uC720\uB85C \uC2EC\uC5F0\uD574\uB97C \uAC00\uB85C\uC9C8\uB7EC\uC57C
+    \uD558\uAC70\uB098, \uC78A\uD600\uC9C0\uACE0 \uC2F6\uC740 \uC790\uB4E4\uC774
+    \uBAA8\uC5EC\uB4DC\uB294 \uD56D\uAD6C. \uC0DD\uC120 \uBC18\uC785 \uAE08\uC9C0."
   portIcon: {fileID: 0}
-  worldPosition: {x: 0, y: 0}
-  availableFacilities: 
+  worldPosition: {x: 4.78, y: 5.37}
+  availableFacilities: 000000000300000004000000
+  dockConfig:
+    hasCargoInspection: 1
+    contrabandItems:
+    - {fileID: 11400000, guid: 03e51a5dfd80a304b9a7dbd262a532b3, type: 2}
+    - {fileID: 11400000, guid: ab7a02ca9810d574a96d1ed25e617829, type: 2}
+    - {fileID: 11400000, guid: 7ecaba089d01d454c84573c5f768e76e, type: 2}
+    - {fileID: 11400000, guid: b2d14ef9e4d0d9845872f7e85d9c78d1, type: 2}
+    - {fileID: 11400000, guid: c66809be1dfc0204db93eddae5fd647e, type: 2}
+    - {fileID: 11400000, guid: 3fdb253c28577c345a9d0dfe64c7d0e1, type: 2}
   eventSchedules: []

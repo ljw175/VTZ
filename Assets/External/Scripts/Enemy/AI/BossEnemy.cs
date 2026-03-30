@@ -149,7 +149,7 @@ public class BossEnemy : Enemy
     private void Dash()
     {
         AudioManager.Instance.PlayEpicMobDash();
-        Vector2 dir = target != null
+        Vector2 dir = (target != null && IsTargetDetectable())
             ? (target.position - transform.position).normalized
             : transform.right;
         StartCoroutine(DashAttackRoutine(dir));

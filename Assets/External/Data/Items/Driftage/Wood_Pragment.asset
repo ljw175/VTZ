@@ -15,8 +15,7 @@ MonoBehaviour:
   itemId: wood_02
   itemName: "\uB098\uBB34 \uC870\uAC01"
   description: "\uB098\uBB47\uAC00\uC9C0\uB77C\uAE30\uC5D0\uB294 \uAD75\uACE0, \uD310\uC790\uB77C\uAE30\uC5D0\uB294
-    \uC81C \uBAAB\uC744 \uBABB\uD55C\uB2E4. \uADF8\uB807\uAE30\uC5D0 \uB098\uBB34
-    \uC870\uAC01."
+    \uC81C \uBAAB\uC744 \uBABB\uD55C\uB2E4."
   itemIcon: {fileID: 1063266944429378152, guid: c2c2f4c04e50dac49838ddb5f800a4c0, type: 3}
   categories: 8
   tags: 8

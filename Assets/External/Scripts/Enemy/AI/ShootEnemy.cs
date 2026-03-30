@@ -50,22 +50,29 @@ public class ShootEnemy : Enemy
 
         float distToPlayer = Vector2.Distance(transform.position, target.position);
 
+        // --- 접안 중 감지 불가 ---
+        if (!IsTargetDetectable())
+        {
+            if (currentState != EnemyState.Patrol)
+                currentState = EnemyState.Patrol;
+        }
+
         // --- 상태 전환 (FSM) ---
         if (currentState == EnemyState.Patrol)
         {
-            if (distToPlayer <= detectionRadius) 
+            if (distToPlayer <= detectionRadius && IsTargetDetectable())
                 currentState = EnemyState.Chase;
         }
         else if (currentState == EnemyState.Chase)
         {
-            if (distToPlayer > detectionRadius * 1.5f) 
+            if (distToPlayer > detectionRadius * 1.5f)
                 currentState = EnemyState.Patrol; // 플레이어가 도망가면 다시 패트롤
-            else if (distToPlayer <= attackRange && IsTargetInFireAngle(out _)) 
+            else if (distToPlayer <= attackRange && IsTargetInFireAngle(out _))
                 currentState = EnemyState.Attack; // 사거리 내이고 사격 각도 안이면 공격
         }
         else if (currentState == EnemyState.Attack)
         {
-            if (distToPlayer > attackRange * 1.2f || !IsTargetInFireAngle(out _)) 
+            if (distToPlayer > attackRange * 1.2f || !IsTargetInFireAngle(out _))
                 currentState = EnemyState.Chase;
         }
 

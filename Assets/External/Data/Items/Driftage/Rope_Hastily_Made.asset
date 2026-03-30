@@ -14,9 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: rope_01
   itemName: "\uAE09\uC870\uB41C \uBC27\uC904"
-  description: "\uCC22\uC5B4\uC9C4 \uC637, \uCC9C \uCABC\uAC00\uB9AC... \uC81C\uB300\uB85C
-    \uAE30\uB2A5\uD558\uC9C0 \uBABB\uD558\uB294 \uAC83\uB4E4\uC744 \uAF2C\uC544\uC11C
-    \uB9CC\uB4E4\uC5C8\uB2E4."
+  description: "\uC81C\uB300\uB85C \uAE30\uB2A5\uD558\uC9C0 \uBABB\uD558\uB294 \uCC9C\uC744
+    \uAF2C\uC544\uC11C \uB9CC\uB4E4\uC5C8\uB2E4."
   itemIcon: {fileID: -6918323392309610505, guid: 14293da9ab50aac4e940c554236c07d8, type: 3}
   categories: 152
   tags: 136

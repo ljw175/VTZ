@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951939f3f10fca04082ecdaf78c23181, type: 3}
   m_Name: Charon Port
   m_EditorClassIdentifier: Assembly-CSharp::PortDefinition
-  portName: Charon Port
+  portName: "\uCE74\uB860 \uD56D"
   description: 
   portIcon: {fileID: 0}
   worldPosition: {x: 0, y: 0}
   availableFacilities: 
+  dockConfig:
+    hasCargoInspection: 0
+    contrabandItems: []
   eventSchedules: []

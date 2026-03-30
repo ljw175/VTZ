@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951939f3f10fca04082ecdaf78c23181, type: 3}
   m_Name: St.Elmo's Port
   m_EditorClassIdentifier: Assembly-CSharp::PortDefinition
-  portName: St.Elmo's Port
+  portName: "\uC138\uC778\uD2B8 \uC5D8\uBAA8 \uD56D\uAD6C"
   description: "\uBD81\uCABD \uB300\uB959\uC73C\uB85C \uD5A5\uD558\uB294 \uC120\uBC15\uB4E4\uC774
     \uD3ED\uD48D\uC744 \uD53C\uD558\uAE30 \uC704\uD574 \uBAA8\uC5EC\uC788\uB2E4.
     \uC774 \uD5D8\uC900\uD55C \uC12C\uC5D0\uB294 \uB192\uC740 \uACE0\uB3C4\uC5D0
@@ -21,6 +21,9 @@ MonoBehaviour:
     \uBD88\uB9AC\uC9C0\uB9CC, \uC2E4\uC81C\uB85C \uC5B4\uB5A4 \uC885\uAD50\uC758
     \uC131\uC9C0\uC778\uC9C0\uB294 \uBD88\uBD84\uBA85\uD558\uB2E4."
   portIcon: {fileID: 0}
-  worldPosition: {x: 0, y: 0}
+  worldPosition: {x: -5.42, y: 6.85}
   availableFacilities: 0000000001000000
+  dockConfig:
+    hasCargoInspection: 0
+    contrabandItems: []
   eventSchedules: []

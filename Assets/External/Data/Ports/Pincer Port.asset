@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951939f3f10fca04082ecdaf78c23181, type: 3}
-  m_Name: Unity Pier
+  m_Name: Pincer Port
   m_EditorClassIdentifier: Assembly-CSharp::PortDefinition
-  portName: 
-  description: 
+  portName: "\uC9D1\uAC8C\uBC1C"
+  description: "\uC9D1\uAC8C\uBC1C."
   portIcon: {fileID: 0}
-  worldPosition: {x: 0, y: 0}
-  availableFacilities: 
+  worldPosition: {x: -3.35, y: 2.55}
+  availableFacilities: 0000000001000000030000000600000002000000040000000500000007000000
+  dockConfig:
+    hasCargoInspection: 0
+    contrabandItems: []
   eventSchedules: []

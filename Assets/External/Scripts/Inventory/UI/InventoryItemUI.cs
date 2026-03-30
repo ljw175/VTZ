@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     private Image iconImage;
     private ItemInstance itemInstance;
@@ -57,6 +57,23 @@ public class InventoryItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         };
 
         iconImage.color = tint;
+    }
+
+    // --- Ctrl+클릭 퀵 전송 ---
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button != PointerEventData.InputButton.Left) return;
+        if (!eventData.currentInputModule || !UnityEngine.InputSystem.Keyboard.current.ctrlKey.isPressed) return;
+        if (itemInstance == null || parentGrid == null) return;
+
+        var sourceContainer = parentGrid.Container;
+        if (sourceContainer == null) return;
+
+        var target = InventoryPopupManager.Instance?.FindTransferTarget(sourceContainer.ContainerId);
+        if (target == null) return;
+
+        InventoryManager.Instance?.TransferItem(itemInstance, sourceContainer, target);
     }
 
     // --- 드래그 ---

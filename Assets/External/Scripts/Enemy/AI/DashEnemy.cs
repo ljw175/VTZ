@@ -39,18 +39,25 @@ public class DashEnemy : Enemy
 
         float distToPlayer = Vector2.Distance(transform.position, target.position);
 
+        // --- 접안 중 감지 불가 ---
+        if (!IsTargetDetectable())
+        {
+            if (currentState != EnemyState.Patrol)
+                currentState = EnemyState.Patrol;
+        }
+
         // --- 상태 전환 (FSM) ---
         if (currentState == EnemyState.Patrol)
         {
-            if (distToPlayer <= detectionRadius) 
+            if (distToPlayer <= detectionRadius && IsTargetDetectable())
                 currentState = EnemyState.Chase;
         }
         else if (currentState == EnemyState.Chase)
         {
             // [수정] 사거리 내에 있고, 돌진 쿨타임이 준비되었을 때만 Attack 상태로 진입
-            if (distToPlayer <= attackRange && attackTimer >= dashCooldown) 
+            if (distToPlayer <= attackRange && attackTimer >= dashCooldown)
                 currentState = EnemyState.Attack;
-            else if (distToPlayer > detectionRadius * 1.5f) 
+            else if (distToPlayer > detectionRadius * 1.5f)
                 currentState = EnemyState.Patrol;
         }
 

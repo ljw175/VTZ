@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951939f3f10fca04082ecdaf78c23181, type: 3}
   m_Name: Bellona Dock
   m_EditorClassIdentifier: Assembly-CSharp::PortDefinition
-  portName: 
-  description: 
+  portName: "\uBCA8\uB85C\uB098 \uD56D\uB9CC"
+  description: "\uCF54\uB974\uBD80\uC2A4 \uD574\uB958\uC758 \uC2DC\uC791\uC810\uC5D0
+    \uC704\uCE58\uD558\uC5EC, \uAE09\uACA9\uD55C \uD56D\uB85C \uBCC0\uACBD\uC774\uB098
+    \uD574\uB958 \uD0D1\uC2B9\uC744 \uC704\uD55C \uD575\uC2EC \uAE30\uCC29\uC9C0."
   portIcon: {fileID: 0}
-  worldPosition: {x: 0, y: 0}
-  availableFacilities: 
+  worldPosition: {x: 0.3, y: 0.2}
+  availableFacilities: 0000000001000000020000000300000004000000
+  dockConfig:
+    hasCargoInspection: 1
+    contrabandItems:
+    - {fileID: 11400000, guid: dcd739396d8332f4fb03b7c1a27be81a, type: 2}
   eventSchedules: []

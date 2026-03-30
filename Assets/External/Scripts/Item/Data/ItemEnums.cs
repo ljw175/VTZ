@@ -42,4 +42,5 @@ public enum InventoryContainerType
     PlayerBackpack,
     PortStorage,
     Loot,
+    Sell,
 }

@@ -47,7 +47,19 @@
       "Bash(xargs grep:*)",
       "Bash(grep -r \"InventorySaveData\\\\|ContainerSaveData\\\\|ItemSaveData\" /c/Users/jungle/VTZ/Assets/External/Scripts/Inventory --include=*.cs)",
       "Bash(grep -r \"class.*Drop\\\\|class.*Loot\\\\|class.*Reward\\\\|class.*Table\\\\|class.*Interact\\\\|class.*Target\\\\|class.*Pickup\" /c/Users/jungle/VTZ/Assets/External/Scripts --include=*.cs)",
-      "Bash(find /c/Users/jungle/VTZ/Assets/External/Scripts -type f -name \"*.cs\" -exec grep -l \"Drop\\\\|Loot\\\\|Reward\\\\|Gather\\\\|Collect\" {})"
+      "Bash(find /c/Users/jungle/VTZ/Assets/External/Scripts -type f -name \"*.cs\" -exec grep -l \"Drop\\\\|Loot\\\\|Reward\\\\|Gather\\\\|Collect\" {})",
+      "Bash(find /c/Users/jungle/VTZ/Assets/External/Scripts -type f -name *Port* -o -name *Harbor* -o -name *Dock*)",
+      "Bash(find /c/Users/jungle/VTZ/Assets -type f -name *Port*)",
+      "Bash(grep -r \"OpenPort\\\\|ClosePort\\\\|IsDocked\" /c/Users/jungle/VTZ/Assets/External/Scripts --include=*.cs)",
+      "Bash(find /c/Users/jungle/VTZ/Assets -type f \\\\\\(-name *.shader -o -name *.shadergraph -o -name *.hlsl \\\\\\))",
+      "Bash(find /c/Users/jungle/VTZ/Assets -type f \\\\\\(-name *[Mm]ap* -o -name *[Tt]ilemap* -o -name *[Ww]orld* -o -name *[Tt]errain* \\\\\\))",
+      "Bash(find /c/Users/jungle/VTZ/Assets -type f -name *World* -o -name *Map*)",
+      "Bash(find /c/Users/jungle/VTZ/Assets/External/Scripts -type f -name *.cs)",
+      "Bash(find /c/Users/jungle/VTZ/Assets -type f -name *.asset)",
+      "Bash(grep -B 3 \"fileID: 0}$\")",
+      "Bash(find Assets -name *.prefab -newer Assets/External/Prefabs/WorldMap.prefab)",
+      "Bash(file \"Assets/External/Prefabs/\"*.prefab)",
+      "Bash(grep -l \"WorldMap\\\\|mapBounds\\\\|bounds\" Assets/External/Scripts/**/*.cs)"
     ]
   }
 }

@@ -66,6 +66,9 @@ TagManager:
   - name: Cloud
     uniqueID: 421586013
     locked: 0
+  - name: FoW
+    uniqueID: 2304654711
+    locked: 0
   - name: Pointer
     uniqueID: 3380474815
     locked: 0

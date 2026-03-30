@@ -105,4 +105,21 @@ public class InventoryPopupManager : MonoBehaviour
     {
         return openPopups.ContainsKey(containerId);
     }
+
+    /// <summary>
+    /// 현재 열린 팝업 중 excludeId가 아니고 ReadOnly가 아닌 첫 번째 컨테이너를 반환한다.
+    /// Ctrl+클릭 퀵 전송 대상을 찾는 용도.
+    /// </summary>
+    public IInventoryContainer FindTransferTarget(string excludeContainerId)
+    {
+        foreach (var kvp in openPopups)
+        {
+            if (kvp.Key == excludeContainerId) continue;
+
+            var container = kvp.Value.Container;
+            if (container != null && !container.IsReadOnly)
+                return container;
+        }
+        return null;
+    }
 }

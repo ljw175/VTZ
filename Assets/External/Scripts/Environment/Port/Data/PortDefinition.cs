@@ -15,6 +15,10 @@ public class PortDefinition : ScriptableObject
     [Header("Facilities")]
     public PortFacilityType[] availableFacilities;
 
+    [Header("Dock Configuration")]
+    [Tooltip("Dock 시설이 availableFacilities에 포함된 경우에만 적용")]
+    public DockFacilityConfig dockConfig;
+
     [Header("Events")]
     [Tooltip("특정 주기(년/월/주/일)마다 활성화되는 이벤트 목록")]
     public PortEventSchedule[] eventSchedules;

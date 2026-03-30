@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   itemId: bottle_01
   itemName: "\uBE48 \uBCD1"
-  description: "\uBE48 \uBCD1. \uC815\uB9D0\uB85C \uD145 \uBE44\uC5C8\uB2E4."
+  description: "\uBE48 \uBCD1. \uD145 \uBE44\uC5C8\uB2E4."
   itemIcon: {fileID: 2730440365418504821, guid: f5b89c4dcfe7de94f8a4d3ae0fae5089, type: 3}
   categories: 0
   tags: 8

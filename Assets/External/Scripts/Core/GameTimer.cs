@@ -222,6 +222,9 @@ public class GameTimer : MonoBehaviour
         gameClearTimerText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 
+    public void PauseTimer() { isRunning = false; }
+    public void ResumeTimer() { isRunning = true; }
+
     public void ReduceTime(int amount)
     {
         currentTime = Mathf.Max(0, currentTime - amount);

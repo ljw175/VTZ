@@ -9,8 +9,10 @@ public class PortManager : MonoBehaviour
     [SerializeField] private GameObject portUIPanel;
 
     private List<PortController> registeredPorts = new List<PortController>();
+    private ShipController shipController;
 
     public bool IsDocked { get; private set; }
+    public PortDefinition CurrentPort { get; private set; }
 
     public event Action<PortDefinition> OnPortOpened;
     public event Action OnPortClosed;
@@ -29,6 +31,8 @@ public class PortManager : MonoBehaviour
 
     private void Start()
     {
+        shipController = FindFirstObjectByType<ShipController>();
+
         if (GameTimer.Instance != null)
             GameTimer.Instance.OnDayChanged += CheckPortEvents;
     }
@@ -50,11 +54,16 @@ public class PortManager : MonoBehaviour
         registeredPorts.Remove(port);
     }
 
-    public void OpenPort(PortDefinition definition)
+    public void OpenPort(PortDefinition definition, Vector2 dockPosition)
     {
         if (IsDocked) return;
 
         IsDocked = true;
+        CurrentPort = definition;
+
+        if (shipController != null)
+            shipController.ForceDock(dockPosition);
+
         if (portUIPanel != null)
             portUIPanel.SetActive(true);
 
@@ -66,6 +75,11 @@ public class PortManager : MonoBehaviour
         if (!IsDocked) return;
 
         IsDocked = false;
+        CurrentPort = null;
+
+        if (shipController != null)
+            shipController.Undock();
+
         if (portUIPanel != null)
             portUIPanel.SetActive(false);
 
