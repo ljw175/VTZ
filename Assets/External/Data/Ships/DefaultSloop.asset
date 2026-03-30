@@ -23,7 +23,7 @@ MonoBehaviour:
   baseTurnSpeed: 0.5
   baseWaterFriction: 1.5
   baseHullHp: 10
-  baseCargoCapacity: 10
+  baseCargoCapacity: 200
   baseCrewCapacity: 5
   baseFuelEfficiency: 1
   baseDetachThreshold: 3

@@ -25,6 +25,6 @@ MonoBehaviour:
   maxRotations: 2
   maxFreshness: -1
   freshnessDecayPerDay: 1
-  weight: 1
+  weight: 0.5
   baseValue: 1
   effects: []

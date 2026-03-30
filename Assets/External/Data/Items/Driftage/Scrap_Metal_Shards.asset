@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "\uACE0\uCCA0 \uD30C\uD3B8"
   description: "\uB179\uC2AC\uACE0 \uBD80\uC11C\uC9C4 \uCCA0\uC81C \uBD80\uD488\uB4E4\uC758
     \uBAA8\uC74C."
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 6052550084070698707, guid: 8e2ebe4740ff66d43a552fab10174029, type: 3}
   categories: 8
   tags: 8
   shapeData:

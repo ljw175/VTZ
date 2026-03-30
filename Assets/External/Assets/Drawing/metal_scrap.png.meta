@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f5b89c4dcfe7de94f8a4d3ae0fae5089
+guid: 8e2ebe4740ff66d43a552fab10174029
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2730440365418504821
-    second: bottle_empty_0
+      213: 6052550084070698707
+    second: metal_scrap_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bottle_empty_0
+      name: metal_scrap_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 8
-        width: 39
-        height: 120
+        x: 19
+        y: 11
+        width: 102
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 572682dbb0974e520800000000000000
-      internalID: 2730440365418504821
+      spriteID: 3de6b42db3afef350800000000000000
+      internalID: 6052550084070698707
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bottle_empty_0: 2730440365418504821
+      metal_scrap_0: 6052550084070698707
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

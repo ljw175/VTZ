@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f5b89c4dcfe7de94f8a4d3ae0fae5089
+guid: 7f44c142f6c40034fa43fe26bf8f5c7d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2730440365418504821
-    second: bottle_empty_0
+      213: 5410320944829551504
+    second: cloth_torn_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bottle_empty_0
+      name: cloth_torn_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 8
-        width: 39
-        height: 120
+        x: 6
+        y: 2
+        width: 58
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 572682dbb0974e520800000000000000
-      internalID: 2730440365418504821
+      spriteID: 093db65fb32551b40800000000000000
+      internalID: 5410320944829551504
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bottle_empty_0: 2730440365418504821
+      cloth_torn_0: 5410320944829551504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,8 +15,8 @@ MonoBehaviour:
   itemId: cloth_02
   itemName: "\uC9E0\uBB3C\uC5D0 \uC816\uC740 \uCC9C"
   description: "\uB3DB\uC758 \uC77C\uBD80\uC600\uC744 \uAC83\uC73C\uB85C \uCD94\uC815\uB418\uB294
-    \uCC9C."
-  itemIcon: {fileID: 0}
+    \uCC9C. \uBC14\uB2F7\uBB3C\uC5D0 \uC808\uC5EC\uC838 \uC788\uB2E4."
+  itemIcon: {fileID: -7085835924889121739, guid: 875d8c02fa0314a48b1e02a27fcca936, type: 3}
   categories: 140
   tags: 8
   shapeData:
@@ -28,6 +28,6 @@ MonoBehaviour:
   maxRotations: 1
   maxFreshness: -1
   freshnessDecayPerDay: 1
-  weight: 1
+  weight: 2
   baseValue: 0
   effects: []

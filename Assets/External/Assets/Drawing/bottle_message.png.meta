@@ -103,10 +103,10 @@ TextureImporter:
       name: bottle_message_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 128
+        x: 13
+        y: 7
+        width: 40
+        height: 121
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

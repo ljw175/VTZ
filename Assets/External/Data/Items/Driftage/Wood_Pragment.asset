@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\uB098\uBB47\uAC00\uC9C0\uB77C\uAE30\uC5D0\uB294 \uAD75\uACE0, \uD310\uC790\uB77C\uAE30\uC5D0\uB294
     \uC81C \uBAAB\uC744 \uBABB\uD55C\uB2E4. \uADF8\uB807\uAE30\uC5D0 \uB098\uBB34
     \uC870\uAC01."
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 1063266944429378152, guid: c2c2f4c04e50dac49838ddb5f800a4c0, type: 3}
   categories: 8
   tags: 8
   shapeData:
@@ -28,6 +28,6 @@ MonoBehaviour:
   maxFreshness: -1
   freshnessDecayPerDay: 1
   weight: 1
-  baseValue: 1
+  baseValue: 2
   effects:
   - {fileID: 11400000, guid: 10817ab15b741444f8487d20d9509551, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: cloth_01
   itemName: "\uCC22\uC5B4\uC9C4 \uCC9C"
   description: "\uCC22\uC5B4\uC9C4 \uCC9C \uC870\uAC01\uC774\uB2E4."
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 5410320944829551504, guid: 7f44c142f6c40034fa43fe26bf8f5c7d, type: 3}
   categories: 8
   tags: 8
   shapeData:
@@ -24,6 +24,6 @@ MonoBehaviour:
   maxRotations: 1
   maxFreshness: -1
   freshnessDecayPerDay: 1
-  weight: 1
+  weight: 0.1
   baseValue: 1
   effects: []

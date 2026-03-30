@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "\uD310\uC790"
   description: "\uD754\uD558\uB2E4\uBA74 \uD754\uD558\uACE0, \uADC0\uD558\uB2E4\uBA74
     \uADC0\uD55C \uAC83."
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 2892661857720482003, guid: 5b9cd6145582b1f45b3ff7cc37a08f27, type: 3}
   categories: 136
   tags: 72
   shapeData:
@@ -27,7 +27,7 @@ MonoBehaviour:
   maxRotations: 2
   maxFreshness: -1
   freshnessDecayPerDay: 1
-  weight: 1
+  weight: 1.5
   baseValue: 10
   effects:
   - {fileID: 11400000, guid: 18a4b393859f4b744b37c1069bb277c0, type: 2}

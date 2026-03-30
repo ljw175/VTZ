@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f5b89c4dcfe7de94f8a4d3ae0fae5089
+guid: c562e09f71a373545b40a8865f71f62c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2730440365418504821
-    second: bottle_empty_0
+      213: -4424812953030756026
+    second: chest_wax_sealed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bottle_empty_0
+      name: chest_wax_sealed_0
       rect:
         serializedVersion: 2
         x: 13
-        y: 8
-        width: 39
-        height: 120
+        y: 10
+        width: 84
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 572682dbb0974e520800000000000000
-      internalID: 2730440365418504821
+      spriteID: 649fd091018e792c0800000000000000
+      internalID: -4424812953030756026
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bottle_empty_0: 2730440365418504821
+      chest_wax_sealed_0: -4424812953030756026
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

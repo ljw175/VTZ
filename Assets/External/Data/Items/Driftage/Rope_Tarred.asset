@@ -16,12 +16,12 @@ MonoBehaviour:
   itemName: "\uD0C0\uB974\uCE60\uD55C \uBC27\uC904"
   description: "\uBD80\uC2DD\uC744 \uB9C9\uAE30 \uC704\uD574 \uAC80\uC740 \uD0C0\uB974\uB97C
     \uC785\uD78C \uD2BC\uD2BC\uD55C \uBC27\uC904. "
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 387638885633099512, guid: d4e77cec2523c3944bc54b59098fb15f, type: 3}
   categories: 152
   tags: 200
   shapeData:
     baseOffsets:
-    - {x: 0, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 0}
     - {x: 1, y: 1}
     - {x: 2, y: 0}
@@ -29,6 +29,6 @@ MonoBehaviour:
   maxRotations: 1
   maxFreshness: -1
   freshnessDecayPerDay: 1
-  weight: 1
+  weight: 10
   baseValue: 10
   effects: []
