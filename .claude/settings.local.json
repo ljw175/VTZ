@@ -59,7 +59,15 @@
       "Bash(grep -B 3 \"fileID: 0}$\")",
       "Bash(find Assets -name *.prefab -newer Assets/External/Prefabs/WorldMap.prefab)",
       "Bash(file \"Assets/External/Prefabs/\"*.prefab)",
-      "Bash(grep -l \"WorldMap\\\\|mapBounds\\\\|bounds\" Assets/External/Scripts/**/*.cs)"
+      "Bash(grep -l \"WorldMap\\\\|mapBounds\\\\|bounds\" Assets/External/Scripts/**/*.cs)",
+      "Bash(\"c:\\\\Users\\\\jungle\\\\.claude\\\\plans\\\\game-flow-analysis.md\":*)",
+      "Read(//c/Users/jungle/.claude/plans/**)",
+      "Bash(find c:/Users/jungle/VTZ/Assets/External/Scripts -name *.cs -type f)",
+      "Bash(mv \"Assets/External/Scripts/Camera/QuestData.cs\" \"Assets/External/Scripts/Quest/QuestData.cs\")",
+      "Bash(mv \"Assets/External/Scripts/Camera/QuestData.cs.meta\" \"Assets/External/Scripts/Quest/QuestData.cs.meta\")",
+      "Bash(mv \"Assets/External/Scripts/Camera/QuestManager.cs\" \"Assets/External/Scripts/Quest/QuestManager.cs\")",
+      "Bash(mv \"Assets/External/Scripts/Camera/QuestManager.cs.meta\" \"Assets/External/Scripts/Quest/QuestManager.cs.meta\")",
+      "Bash(mv \"Assets/External/Scripts/Camera/ZodiacSystem.cs\" \"Assets/External/Scripts/Quest/ZodiacSystem.cs\")"
     ]
   }
 }

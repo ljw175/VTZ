@@ -786,8 +786,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0, g: 0.37254903, b: 0.69803923, a: 0.27450982}
+      key1: {r: 0, g: 0.37254903, b: 0.69803923, a: 0.27450982}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -811,13 +811,13 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 1
+    textureMode: 0
     textureScale: {x: 0.1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
@@ -900,37 +900,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046527087f8e73144a5c2f1891c2735c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipController
-  baseSpeed: 0
+  shipDefinition: {fileID: 0}
   accelLevel: 1
   ghostAccelLevel: 1
   forwardAccel: 2
   backwardAccel: 1
   autoAccelMult: 1
-  turnSpeed: 0.5
-  waterFriction: 1.5
   speedDisplay: {fileID: 0}
   attachRangeIndicator: {fileID: 1137751097720390162, guid: 286e4115ee9db37408f1bb7869e998d3, type: 3}
   fateDeviationIndicator: {fileID: 0}
   fateLostUI: {fileID: 0}
   fateDeviationSlider: {fileID: 0}
   ghostShipPrefab: {fileID: 6903252855027750859, guid: 0a7594cf4395f494987b8eb9a0040001, type: 3}
-  slipstreamLineMaterial: {fileID: 2100000, guid: 1c298312a75a4e849af39d1665e72739, type: 2}
+  slipstreamLineMaterial: {fileID: 0}
   slipstreamLineWidth: 0.3
-  detachThreshold: 3
-  attachThreshold: 2
-  maxFateDistance: 5
   syncSpringForce: 5
-  maxSlipstreamMultiplier: 1.2
-  slipstreamRadius: 2
-  slipstreamGripForce: 3
+  slipstreamGripForce: 0
   maxTracePoints: 300
   rewindSpeed: 100
-  maxHp: 50
+  pathContinueDistance: 3
+  pointMinDistance: 1
   hitParticleSystem: {fileID: 0}
+  ghostVisualLerpSpeed: 15
+  ghostRotationLerpSpeed: 10
+  syncRotationMultiplier: 2
+  manualTurnMultiplier: 100
+  slipstreamLerpSpeed: 5
+  lostSpeedPenalty: 0.8
+  lostRecoveryRatio: 0.8
+  hitParticleMultiplier: 5
   cannonShooter: {fileID: 2699202960822108497}
   maxCannonDeviation: 40
   cannonSprite: {fileID: 149517120407976975}
-  routeMaterial: {fileID: 2100000, guid: d8dcf86f4d4dda14daba61037e1cf0d0, type: 2}
+  routeMaterial: {fileID: 2100000, guid: 1c298312a75a4e849af39d1665e72739, type: 2}
   lineWidth: 0.3
 --- !u!114 &2699202960822108497
 MonoBehaviour:

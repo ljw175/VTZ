@@ -10,6 +10,9 @@ public class DriftageController : LootableObject
     private bool isLooted;
     private int initialItemCount;
 
+    /// <summary>퀘스트 표류물인 경우 true</summary>
+    [HideInInspector] public bool isQuestDriftage;
+
     public override string PromptText => definition != null ? definition.promptText : "E: 조사하기";
     public override bool CanLoot => !isLooted && definition != null && definition.lootTable != null;
 
@@ -21,6 +24,10 @@ public class DriftageController : LootableObject
     protected override void OnLoot()
     {
         isLooted = true;
+
+        // 퀘스트 표류물 접촉 통지
+        if (isQuestDriftage && QuestProgressTracker.Instance != null)
+            QuestProgressTracker.Instance.NotifyQuestDriftageInteracted();
 
         var items = definition.lootTable.Roll();
         if (items.Count == 0)

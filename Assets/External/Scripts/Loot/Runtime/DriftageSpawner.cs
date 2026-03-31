@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DriftageSpawner : MonoBehaviour
 {
+    public static DriftageSpawner Instance { get; private set; }
+
     [Header("Spawn Constraints")]
     [SerializeField] private LayerMask obstacleLayer;
     [SerializeField] private LayerMask playerLayer;
@@ -14,6 +16,12 @@ public class DriftageSpawner : MonoBehaviour
     private Transform playerTransform;
     private List<Vector2> spawnPoints = new List<Vector2>();
     private List<GameObject> activeDriftage = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -108,5 +116,45 @@ public class DriftageSpawner : MonoBehaviour
 
         float angle = Random.Range(0f, Mathf.PI * 2f);
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnMapRadius;
+    }
+
+    /// <summary>
+    /// 퀘스트용 표류물을 지정된 위치에 강제 스폰한다.
+    /// 장애물과 겹치면 근처 유효 위치로 보정한다.
+    /// </summary>
+    public GameObject SpawnQuestDriftage(GameObject prefab, DriftageDefinition definition, Vector2 targetPos)
+    {
+        if (prefab == null || definition == null) return null;
+
+        // 장애물 위라면 근처 빈 곳으로 보정
+        Vector2 spawnPos = targetPos;
+        if (Physics2D.OverlapCircle(targetPos, safeRadius, obstacleLayer) != null)
+        {
+            spawnPos = FindNearestSafePosition(targetPos);
+        }
+
+        GameObject obj = Instantiate(prefab, spawnPos, Quaternion.identity);
+        var controller = obj.GetComponent<DriftageController>();
+        if (controller != null)
+            controller.SetDefinition(definition);
+
+        spawnPoints.Add(spawnPos);
+        activeDriftage.Add(obj);
+        return obj;
+    }
+
+    private Vector2 FindNearestSafePosition(Vector2 origin)
+    {
+        for (float radius = safeRadius; radius < spawnMapRadius; radius += safeRadius)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                float angle = i * Mathf.PI * 2f / 8f;
+                Vector2 candidate = origin + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+                if (Physics2D.OverlapCircle(candidate, safeRadius, obstacleLayer) == null)
+                    return candidate;
+            }
+        }
+        return origin;
     }
 }

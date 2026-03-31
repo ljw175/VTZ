@@ -79,7 +79,16 @@ public class GameManager : MonoBehaviour
     public bool IsSteeringMode { get; private set; } = false;
     private ShipController shipController; 
     
-    public bool IsDetached => shipController != null && !shipController.IsSynchronized;
+    /// <summary>
+    /// 경로 라인에서 벗어났는지 여부. 유령선 부착이 아닌 경로 이탈 거리 기반으로 판정.
+    /// </summary>
+    public bool IsDetached => shipController != null && shipController.CurrentFateDeviation > GetRouteDetachThreshold();
+
+    private float GetRouteDetachThreshold()
+    {
+        if (shipController == null || shipController.StatsProvider == null) return 3f;
+        return shipController.StatsProvider.GetStat(ShipStatType.DetachThreshold);
+    }
 
     private void Awake()
     {
@@ -102,8 +111,24 @@ public class GameManager : MonoBehaviour
 
         TitleUIFocus();
         UpdateLeaderboardUI();
-        
-        ChangePhase(GamePhase.Paused); 
+
+        ChangePhase(GamePhase.Paused);
+
+        // 최초 퀘스트 할당 (모든 싱글톤의 Start() 완료 후 실행되도록 1프레임 지연)
+        StartCoroutine(AssignFirstQuestDeferred());
+    }
+
+    private System.Collections.IEnumerator AssignFirstQuestDeferred()
+    {
+        yield return null; // 모든 Start() 완료 대기
+
+        if (QuestManager.Instance != null && GameTimer.Instance != null)
+        {
+            QuestManager.Instance.GenerateRandomQuestForCurrentZodiac(
+                GameTimer.Instance.Months,
+                GameTimer.Instance.Days
+            );
+        }
     }
 
     private void OnDestroy()
@@ -114,7 +139,12 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (InputManager.Instance.Pause.WasPressedThisFrame()) TogglePause();
-        if (InputManager.Instance.StartPhase.WasPressedThisFrame() && CurrentPhase == GamePhase.Paused && !IsPaused) ChangePhase(GamePhase.RealTime);
+        if (InputManager.Instance.StartPhase.WasPressedThisFrame() && CurrentPhase == GamePhase.Paused && !IsPaused)
+        {
+            ChangePhase(GamePhase.RealTime);
+            if (QuestProgressTracker.Instance != null && QuestManager.Instance?.currentQuest != null)
+                QuestProgressTracker.Instance.StartTracking(QuestManager.Instance.currentQuest);
+        }
         if (InputManager.Instance.Restart.WasPressedThisFrame() && !firstClearPanel.activeSelf) RestartGame();
 
         HandleSteeringGauge();
@@ -154,7 +184,16 @@ public class GameManager : MonoBehaviour
 
         // 3. 현재 운명 일치율(Fate Sync Rate)은 CurrentFateSyncRate 변수에 자연스럽게 유지됨.
         
-        // 4. 강제로 계획 페이즈로 전환하여 시간을 멈춤
+        // 4. 다음 퀘스트 생성
+        if (QuestManager.Instance != null && GameTimer.Instance != null)
+        {
+            QuestManager.Instance.GenerateRandomQuestForCurrentZodiac(
+                GameTimer.Instance.Months,
+                GameTimer.Instance.Days
+            );
+        }
+
+        // 5. 강제로 계획 페이즈로 전환하여 시간을 멈춤
         ChangePhase(GamePhase.Paused);
     }
 

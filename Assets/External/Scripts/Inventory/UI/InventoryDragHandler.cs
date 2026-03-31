@@ -125,6 +125,15 @@ public class InventoryDragHandler : MonoBehaviour
 
         if (!placed)
         {
+            // 그리드 밖에 드롭 → 바다 투기 확인
+            InventoryGridUI hoverGrid = FindGridUnderCursor(eventData);
+            if (hoverGrid == null && !sourceGrid.Container.IsReadOnly)
+            {
+                // 투기 확인 팝업 표시 (콜백에서 처리)
+                ShowDiscardConfirmation();
+                return; // 팝업 결과에 따라 처리됨, 여기서 상태 정리하지 않음
+            }
+
             // 원래 위치로 복원
             draggedItem.GridX = origX;
             draggedItem.GridY = origY;
@@ -268,5 +277,66 @@ public class InventoryDragHandler : MonoBehaviour
             position = InputManager.Instance.MousePos
         };
         return FindGridUnderCursor(eventData);
+    }
+
+    /// <summary>
+    /// 아이템을 그리드 밖에 드롭했을 때 바다 투기 확인 팝업을 띄운다.
+    /// </summary>
+    private void ShowDiscardConfirmation()
+    {
+        if (ConfirmDialog.Instance == null)
+        {
+            // ConfirmDialog가 없으면 복원
+            RestoreDraggedItem();
+            return;
+        }
+
+        // 팝업이 열려있는 동안 참조를 임시 보관
+        var itemToDiscard = draggedItem;
+        var source = sourceGrid;
+        int savedX = origX, savedY = origY, savedRot = origRot;
+
+        string itemName = itemToDiscard.Definition != null ? itemToDiscard.Definition.itemName : "아이템";
+
+        ConfirmDialog.Instance.Show(
+            $"{itemName}을(를) 바다에 버리시겠습니까?",
+            onYes: () =>
+            {
+                // 투기 확정: 소스 컨테이너에서 완전 제거
+                source.Container.GridState.StampItem(itemToDiscard);
+                source.Container.GridState.RemoveItem(itemToDiscard);
+
+                // 퀘스트 시스템에 통지
+                if (QuestProgressTracker.Instance != null)
+                    QuestProgressTracker.Instance.NotifyItemDiscarded(itemToDiscard);
+
+                Debug.Log($"[Inventory] {itemName}을(를) 바다에 버렸습니다.");
+            },
+            onNo: () =>
+            {
+                // 취소: 원래 위치로 복원
+                itemToDiscard.GridX = savedX;
+                itemToDiscard.GridY = savedY;
+                itemToDiscard.RotationIndex = savedRot;
+                source.Container.GridState.StampItem(itemToDiscard);
+            }
+        );
+
+        DestroyGhost();
+        ResetAllVisibleGridHighlights();
+        CleanupDragState();
+    }
+
+    private void RestoreDraggedItem()
+    {
+        if (draggedItem == null) return;
+        draggedItem.GridX = origX;
+        draggedItem.GridY = origY;
+        draggedItem.RotationIndex = origRot;
+        sourceGrid.Container.GridState.StampItem(draggedItem);
+
+        DestroyGhost();
+        ResetAllVisibleGridHighlights();
+        CleanupDragState();
     }
 }

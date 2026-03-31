@@ -104,6 +104,7 @@ public class ShipController : MonoBehaviour
 
     public bool IsDockedAtPort { get; private set; }
 
+    private bool isQuestRouteActive = false;
     private bool isVoluntarilyDetached = false;
 
     public event Action<bool> OnSyncStateChanged; 
@@ -185,6 +186,7 @@ public class ShipController : MonoBehaviour
     public void ResetPathForNextWave()
     {
         isDrawing = false;
+        isQuestRouteActive = false;
         tracePoints.Clear();
         
         ghostShipPos = transform.position; 
@@ -211,6 +213,32 @@ public class ShipController : MonoBehaviour
     {
         IsDockedAtPort = false;
     }
+
+    /// <summary>
+    /// 퀘스트 시스템이 생성한 경로를 tracePoints에 주입한다.
+    /// 기존 유령선 시스템이 그대로 이 경로를 따라 이동한다.
+    /// </summary>
+    public void SetQuestRoute(List<Vector3> questTracePoints)
+    {
+        tracePoints.Clear();
+        tracePoints.AddRange(questTracePoints);
+
+        ghostShipPos = tracePoints[0];
+        ghostTargetIndex = 1;
+        isQuestRouteActive = true;
+
+        SetSyncState(true);
+        SetLostState(false);
+        isVoluntarilyDetached = false;
+
+        if (ghostShipInstance != null)
+            ghostShipInstance.transform.position = ghostShipPos;
+
+        UpdateLineRenderer();
+    }
+
+    public int GhostTargetIndex => ghostTargetIndex;
+    public int TracePointCount => tracePoints.Count;
 
     private void Update()
     {
@@ -255,6 +283,7 @@ public class ShipController : MonoBehaviour
     #region Planning Phase
     private void HandlePlanningPhase()
     {
+        if (isQuestRouteActive) return; // 퀘스트 경로 활성화 시 수동 그리기 차단
         if (InputManager.Instance.IsPointerOverUI()) return;
 
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePos);
@@ -367,7 +396,8 @@ public class ShipController : MonoBehaviour
 
     private void UpdateSyncState()
     {
-        CurrentFateDeviation = Vector2.Distance(transform.position, ghostShipPos);
+        // 경로 라인까지의 최단 거리로 동기화 판정 (유령선 기준이 아닌 경로 기반)
+        CurrentFateDeviation = GetDistanceToRoutePath();
         bool isHoldingShift = GameManager.Instance.IsSteeringMode;
 
         float detachThreshold = runtimeState.GetStat(ShipStatType.DetachThreshold);
@@ -386,6 +416,38 @@ public class ShipController : MonoBehaviour
 
         if (!IsLost && CurrentFateDeviation >= maxFateDist) SetLostState(true);
         else if (IsLost && CurrentFateDeviation < maxFateDist * lostRecoveryRatio) SetLostState(false);
+    }
+
+    /// <summary>
+    /// 플레이어에서 경로 라인(tracePoints)까지의 최단 거리를 계산한다.
+    /// 경로가 없으면 유령선과의 거리를 폴백으로 사용한다.
+    /// </summary>
+    private float GetDistanceToRoutePath()
+    {
+        if (tracePoints.Count < 2)
+            return Vector2.Distance(transform.position, ghostShipPos);
+
+        Vector2 playerPos = transform.position;
+        float minDistSq = float.MaxValue;
+
+        for (int i = 0; i < tracePoints.Count - 1; i++)
+        {
+            Vector2 a = tracePoints[i];
+            Vector2 b = tracePoints[i + 1];
+            Vector2 ab = b - a;
+            float sqrLen = ab.sqrMagnitude;
+
+            if (sqrLen < 0.001f) continue;
+
+            float t = Mathf.Clamp01(Vector2.Dot(playerPos - a, ab) / sqrLen);
+            Vector2 projection = a + t * ab;
+            float distSq = (playerPos - projection).sqrMagnitude;
+
+            if (distSq < minDistSq)
+                minDistSq = distSq;
+        }
+
+        return Mathf.Sqrt(minDistSq);
     }
 
     private void SetSyncState(bool state)

@@ -122,7 +122,7 @@ public class CameraController : MonoBehaviour
 
         // 카메라 뷰포트 크기에 따른 보정값 계산
         halfHeight = cam.orthographicSize;
-        halfWidth = halfHeight * cam.aspect; // Screen.width / Screen.height 보다 Camera.aspect가 더 정확합니다.
+        //halfWidth = halfHeight * cam.aspect; // Screen.width / Screen.height 보다 Camera.aspect가 더 정확합니다.
 
         // 항해 모드라면 카메라 위치를 맵 경계 내로 제한
         if (GameManager.Instance.CurrentPhase == GamePhase.RealTime && mapBounds != null)

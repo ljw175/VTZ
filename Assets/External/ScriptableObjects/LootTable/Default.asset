@@ -15,7 +15,7 @@ MonoBehaviour:
   entries:
   - item: {fileID: 11400000, guid: 6559718e1d55556499391c20003a3294, type: 2}
     weight: 10
-    minCount: 1
+    minCount: 0
     maxCount: 1
   - item: {fileID: 11400000, guid: c7cadbe8a0db1ab4b8a903c7bc3f2eef, type: 2}
     weight: 5
@@ -23,7 +23,7 @@ MonoBehaviour:
     maxCount: 2
   - item: {fileID: 11400000, guid: 8b9f08248b78d6e4b98616b851aca1da, type: 2}
     weight: 10
-    minCount: 1
+    minCount: 0
     maxCount: 1
   - item: {fileID: 11400000, guid: 0a7987e7ff7be454ca79ab7e9ecabafb, type: 2}
     weight: 5
@@ -31,7 +31,7 @@ MonoBehaviour:
     maxCount: 2
   - item: {fileID: 11400000, guid: 3ea4fed96334bbc4aa3a88ee7c2e4ca1, type: 2}
     weight: 10
-    minCount: 1
+    minCount: 0
     maxCount: 1
   - item: {fileID: 11400000, guid: dc2aa6f32f95b8f45858e94bda29bc72, type: 2}
     weight: 2
@@ -47,7 +47,7 @@ MonoBehaviour:
     maxCount: 2
   - item: {fileID: 11400000, guid: a76cfce2857efd740aa8f5bb0d802937, type: 2}
     weight: 3
-    minCount: 1
+    minCount: 0
     maxCount: 1
   - item: {fileID: 11400000, guid: fa94927a7c19b414a9be98802789da44, type: 2}
     weight: 0.5
